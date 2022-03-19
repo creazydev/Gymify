@@ -1,2 +1,2 @@
 # Gymify
-Application for managing and tracking workout
+Application for managing and tracking workouts.

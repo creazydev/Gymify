@@ -1,0 +1,16 @@
+version: '3'
+services:
+  postgres:
+    image: 'postgres:latest'
+    container_name: 'postgres-container'
+    hostname: 'localhost'
+    ports:
+      - "5432:5432"
+    volumes:
+      - data:/var/lib/gymify/data
+    environment:
+      - POSTGRES_USER=gymify
+      - POSTGRES_PASSWORD=aifae4UH>aiquie
+      - POSTGRES_DB=gymify
+volumes:
+  data:
