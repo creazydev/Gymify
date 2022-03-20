@@ -1,5 +1,6 @@
 package com.github.Gymify.persistence.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.github.Gymify.persistence.enums.UserAuthority;
 import com.github.Gymify.persistence.type.EnumSetType;
 import lombok.Getter;
@@ -54,6 +55,7 @@ public class User implements UserDetails {
     }
 
     @Override
+    @JsonIgnore
     public String getPassword() {
         return this.password;
     }

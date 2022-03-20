@@ -1,5 +1,6 @@
 package com.github.Gymify.security.filter;
 
+import com.github.Gymify.security.context.JwtPreAuthenticationToken;
 import com.github.Gymify.security.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -27,15 +28,15 @@ public class JwtFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws IOException, ServletException {
-//        getToken(request)
-//            .map(userService::loadUserByToken)
-//            .map(userDetails -> JWTPreAuthenticationToken
-//                .builder()
-//                .principal(userDetails)
-//                .details(new WebAuthenticationDetailsSource().buildDetails(request))
-//                .build())
-//            .ifPresent(authentication -> SecurityContextHolder.getContext().setAuthentication(authentication));
-//        filterChain.doFilter(request, response);
+        getToken(request)
+            .map(userService::loadUserByToken)
+            .map(userDetails -> JwtPreAuthenticationToken
+                .builder()
+                .principal(userDetails)
+                .details(new WebAuthenticationDetailsSource().buildDetails(request))
+                .build())
+            .ifPresent(authentication -> SecurityContextHolder.getContext().setAuthentication(authentication));
+        filterChain.doFilter(request, response);
 
     }
 
