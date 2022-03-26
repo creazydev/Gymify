@@ -7,12 +7,15 @@ import lombok.NoArgsConstructor;
 final class SecurityProperties {
 
     static final String[] IGNORE_ANT_MATCHERS_POST = {
+        "/*",
+        "/graphql",
     };
 
     static final String[] IGNORE_ANT_MATCHERS_PUT = {
     };
 
     static final String[] IGNORE_ANT_MATCHERS_GET = {
-            "/*",
+        "/*",
+        "/playground"
     };
 }

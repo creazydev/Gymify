@@ -39,7 +39,7 @@ public class User implements UserDetails {
 
     @Id
     @GeneratedValue
-    private String id;
+    private Long id;
 
     @NotBlank
     private String email;
@@ -64,6 +64,7 @@ public class User implements UserDetails {
         this.authorities = EnumSet.copyOf(authorities);
         this.accountNonExpired = true;
         this.accountNonLocked = true;
+        this.credentialsNonExpired = true;
         this.enabled = true;
     }
 

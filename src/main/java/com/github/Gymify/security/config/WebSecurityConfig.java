@@ -31,6 +31,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .cors()
                 .and()
+                .csrf()
+                .disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .addFilterBefore(jwtFilter, RequestHeaderAuthenticationFilter.class)
@@ -56,7 +58,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/resources/**",
                         "/public/**",
                         "/static/**",
-                        "/assets/**"
+                        "/assets/**",
+                        "/vendor/**"
                 );
         super.configure(web);
     }
