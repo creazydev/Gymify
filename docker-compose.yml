@@ -12,5 +12,6 @@ services:
       - POSTGRES_USER=gymify
       - POSTGRES_PASSWORD=aifae4UH>aiquie
       - POSTGRES_DB=gymify
+    command: -p 5433
 volumes:
   data:
