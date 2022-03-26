@@ -1,4 +1,4 @@
-package com.github.Gymify.account.model;
+package com.github.Gymify.user.model;
 
 import lombok.Data;
 import org.springframework.security.core.userdetails.UserDetails;

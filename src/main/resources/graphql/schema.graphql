@@ -1,0 +1,12 @@
+type Query {
+    currentUser: AuthenticatedUser
+}
+
+type Mutation {
+    login(email: String!, password: String!): AuthenticatedUser
+}
+
+type AuthenticatedUser {
+    email: String
+    authenticationToken: String
+}

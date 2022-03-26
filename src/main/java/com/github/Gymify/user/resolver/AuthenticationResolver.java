@@ -1,6 +1,6 @@
-package com.github.Gymify.account.resolver;
+package com.github.Gymify.user.resolver;
 
-import com.github.Gymify.account.model.AuthenticatedUser;
+import com.github.Gymify.user.model.AuthenticatedUser;
 import com.github.Gymify.security.service.JwtService;
 import com.github.Gymify.security.service.UserService;
 import graphql.kickstart.tools.GraphQLMutationResolver;
@@ -8,7 +8,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
