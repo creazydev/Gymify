@@ -1,5 +1,6 @@
 package com.github.Gymify.persistence.type;
 
+import org.apache.logging.log4j.util.Strings;
 import org.hibernate.type.descriptor.WrapperOptions;
 import org.hibernate.type.descriptor.java.AbstractTypeDescriptor;
 import org.springframework.util.StringUtils;
@@ -31,18 +32,23 @@ public class EnumSetTypeDescriptor extends AbstractTypeDescriptor<EnumSet> {
 
     @Override
     public EnumSet fromString(String string) {
-        if (StringUtils.isEmpty(string))
+        if (Objects.isNull(string) || Strings.isBlank(string)) {
             return null;
+        }
 
-        List<Enum> list = Arrays.stream(StringUtils.split(string, SEPARATOR))
-            .map(ordinal -> enumConstants[Integer.parseInt(ordinal)])
-            .map(Enum.class::cast)
-            .collect(Collectors.toList());
+        try {
+            List<Enum> list = Arrays.stream(StringUtils.split(string, SEPARATOR))
+                .map(ordinal -> enumConstants[Integer.parseInt(ordinal)])
+                .map(Enum.class::cast)
+                .collect(Collectors.toList());
 
-        if (list.isEmpty())
+            if (list.isEmpty())
+                return null;
+
+            return EnumSet.copyOf(list);
+        } catch (Exception e) {
             return null;
-
-        return EnumSet.copyOf(list);
+        }
     }
 
     @Override
