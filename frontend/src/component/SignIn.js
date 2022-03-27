@@ -3,8 +3,6 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Alert from '@mui/material/Alert';
 import Link from '@mui/material/Link';
 import Paper from '@mui/material/Paper';
@@ -14,6 +12,9 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import {createTheme, ThemeProvider} from '@mui/material/styles';
 import {gql, useMutation} from "@apollo/client";
+import { useTranslation } from "react-i18next";
+import "../translations/i18n";
+import {IconButton} from "@mui/material";
 
 const theme = createTheme();
 
@@ -27,6 +28,7 @@ const LOGIN_MUTATION = gql`
 `;
 
 export default function SignIn() {
+    const { t, i18n } = useTranslation();
     const [signIn, { data, loading, error, reset }] = useMutation(LOGIN_MUTATION);
 
     if (data) {
@@ -70,7 +72,7 @@ export default function SignIn() {
                             <LockOutlinedIcon/>
                         </Avatar>
                         <Typography component="h1" variant="h5">
-                            Sign in
+                            {t("sign_in")}
                         </Typography>
                         <Box component="form"
                              onSubmit={e => {

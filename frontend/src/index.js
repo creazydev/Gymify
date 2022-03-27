@@ -1,12 +1,21 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
 import './index.css';
+import "@fortawesome/fontawesome-free/css/all.min.css";
+import "bootstrap-css-only/css/bootstrap.min.css";
+import "mdbreact/dist/css/mdb.css";
+import 'mdb-react-ui-kit/dist/css/mdb.min.css';
+
+import React from 'react';
+import ReactDOM, {render} from 'react-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import {LanguageSelectionFooter} from "./component/LanguageSelectionFooter";
 
 ReactDOM.render(
     <React.StrictMode>
-        <App/>
+        <div className="content">
+            <App key="1"/>
+            <LanguageSelectionFooter key="2"/>
+        </div>
     </React.StrictMode>,
     document.getElementById('root')
 );
