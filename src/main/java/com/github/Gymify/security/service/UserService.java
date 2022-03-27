@@ -1,6 +1,7 @@
 package com.github.Gymify.security.service;
 
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.github.Gymify.exception.RuntimeExceptionWhileDataFetching;
 import com.github.Gymify.persistence.entity.User;
 import com.github.Gymify.persistence.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +14,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.naming.AuthenticationException;
 import java.util.Optional;
 
 @Service
@@ -34,7 +34,7 @@ public class UserService implements UserDetailsService {
         return jwtService.getDecodedToken(token)
                 .map(DecodedJWT::getSubject)
                 .map(this::loadUserByUsername)
-                .orElseThrow(RuntimeException::new);
+                .orElseThrow(() -> RuntimeExceptionWhileDataFetching.notFound(User.class));
     }
 
     public UserDetails getCurrentUser() {
@@ -43,6 +43,6 @@ public class UserService implements UserDetailsService {
                 .map(SecurityContext::getAuthentication)
                 .map(Authentication::getName)
                 .flatMap(userRepository::findByEmail)
-                .orElseThrow(RuntimeException::new);
+                .orElseThrow(RuntimeExceptionWhileDataFetching::unAuthorized);
     }
 }

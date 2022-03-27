@@ -5,6 +5,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
+import Alert from '@mui/material/Alert';
 import Link from '@mui/material/Link';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
@@ -28,11 +29,13 @@ const LOGIN_MUTATION = gql`
 export default function SignIn() {
     const [signIn, { data, loading, error, reset }] = useMutation(LOGIN_MUTATION);
 
-    if (loading) {
-        console.log('xxx');
+    if (data) {
+        return data.login.email;
     }
 
-    if (error) return `Submission error! ${error.message}`;
+    if (error) {
+        // return `Submission error! ${error.message}`;
+    }
 
     return (
 
@@ -79,9 +82,6 @@ export default function SignIn() {
                                          password: formData.get("password")
                                      }
                                  }).then()
-
-                                 // console.log(e);
-                                 // login(e).then();
                              }}
                              noValidate sx={{mt: 1}}>
                             <TextField
@@ -91,6 +91,7 @@ export default function SignIn() {
                                 id="email"
                                 label="Email Address"
                                 name="email"
+                                value={"test@mail.ruu"}
                                 autoComplete="email"
                                 autoFocus
                             />
@@ -101,16 +102,15 @@ export default function SignIn() {
                                 name="password"
                                 label="Password"
                                 type="password"
+                                value={"sample"}
                                 id="password"
                                 autoComplete="current-password"
                             />
-                            <FormControlLabel
-                                control={<Checkbox value="remember" color="primary"/>}
-                                label="Remember me"
-                            />
+                            {error ? (<Alert severity="error">{error.message}</Alert>) : null}
                             <Button
                                 type="submit"
                                 fullWidth
+                                disabled={loading}
                                 variant="contained"
                                 sx={{mt: 3, mb: 2}}
                             >
