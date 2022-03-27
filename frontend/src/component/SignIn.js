@@ -13,40 +13,19 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import {createTheme, ThemeProvider} from '@mui/material/styles';
 import {gql, useMutation} from "@apollo/client";
-import {AUTH_TOKEN} from "../authentication/constants";
-import {useState} from "react";
 
 const theme = createTheme();
 
 const LOGIN_MUTATION = gql`
     mutation LoginMutation($email: String!$password: String!) {
-        login(email: $email, password: $password)
+        login(email: $email, password: $password) {
+            email
+            authenticationToken
+        }
     }
 `;
 
 export default function SignIn() {
-
-    const [formState, setFormState] = useState({
-        login: true,
-        email: '',
-        password: '',
-        name: ''
-    });
-
-    const [login] = useMutation(LOGIN_MUTATION, {
-        variables: {
-            email: formState.email,
-            password: formState.password
-        },
-        onError: (error) => {
-            console.log(error);
-        },
-        onCompleted: ({ login }) => {
-            console.log('xxx');
-            localStorage.setItem(AUTH_TOKEN, login.token);
-        }
-    });
-
     const [signIn, { data, loading, error, reset }] = useMutation(LOGIN_MUTATION);
 
     if (loading) {
@@ -93,8 +72,16 @@ export default function SignIn() {
                         <Box component="form"
                              onSubmit={e => {
                                  e.preventDefault();
-                                 console.log(e);
-                                 login(e).then();
+                                 const formData = new FormData(e.currentTarget)
+                                 signIn({
+                                     variables: {
+                                         email: formData.get("email"),
+                                         password: formData.get("password")
+                                     }
+                                 }).then()
+
+                                 // console.log(e);
+                                 // login(e).then();
                              }}
                              noValidate sx={{mt: 1}}>
                             <TextField

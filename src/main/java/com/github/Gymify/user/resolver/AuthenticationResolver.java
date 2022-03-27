@@ -1,5 +1,6 @@
 package com.github.Gymify.user.resolver;
 
+import com.github.Gymify.configuration.GLogger;
 import com.github.Gymify.user.model.AuthenticatedUser;
 import com.github.Gymify.security.service.JwtService;
 import com.github.Gymify.security.service.UserService;
@@ -12,12 +13,13 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
 
 @Component
 @RequiredArgsConstructor
-public class AuthenticationResolver implements GraphQLMutationResolver {
+public class AuthenticationResolver implements GraphQLMutationResolver, GLogger {
     private final AuthenticationProvider authenticationProvider;
     private final UserService userService;
     private final JwtService jwtService;
@@ -36,6 +38,7 @@ public class AuthenticationResolver implements GraphQLMutationResolver {
                     jwtService.getToken(currentUser)
             );
         } catch (AuthenticationException ex) {
+            debug(ex.getMessage());
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "User not authenticated");
         }
     }
