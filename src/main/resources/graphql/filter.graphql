@@ -1,0 +1,22 @@
+input StringExpression {
+    equals: String
+    contains: String
+}
+
+input IntExpression {
+    eq: Int
+    gt: Int
+    gte: Int
+    lt: Int
+    lte: Int
+}
+
+input DateTimeExpression {
+    eq: DateTime
+    gt: DateTime
+    gte: DateTime
+    lt: DateTime
+    lte: DateTime
+    between: [DateTime!]
+}
+

@@ -1,3 +1,5 @@
+scalar DateTime
+
 type Query {
     currentUser: AuthenticatedUser
     currentUserWorkouts(pageableRequest: PageableRequest!): WorkoutPage

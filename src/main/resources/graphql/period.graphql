@@ -1,0 +1,18 @@
+type Period {
+    periodBegin: DateTime
+    periodDue: DateTime
+    periodDuration: Duration
+}
+
+type Duration {
+    seconds: Int
+}
+
+input PeriodFilter {
+    periodBegin: DateTimeExpression
+    periodDue: DateTimeExpression
+
+    and: [PeriodFilter!]
+    or: [PeriodFilter!]
+    not: PeriodFilter
+}
