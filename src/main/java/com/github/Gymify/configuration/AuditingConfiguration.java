@@ -20,8 +20,8 @@ import java.util.Optional;
 public class AuditingConfiguration {
 
     @Bean
-    AuditorAware<Long> auditorProvider(UserService userService, UserRepository userRepository) {
-        return new ApplicationAuditorAware(userService, userRepository);
+    AuditorAware<Long> auditorProvider(UserService userService) {
+        return new ApplicationAuditorAware(userService);
     }
 
     @Bean

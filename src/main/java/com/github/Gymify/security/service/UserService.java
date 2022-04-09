@@ -37,12 +37,15 @@ public class UserService implements UserDetailsService {
                 .orElseThrow(() -> RuntimeExceptionWhileDataFetching.notFound(User.class));
     }
 
-    public UserDetails getCurrentUser() {
+    public Optional<User> findCurrentUser() {
         return Optional
-                .ofNullable(SecurityContextHolder.getContext())
-                .map(SecurityContext::getAuthentication)
-                .map(Authentication::getName)
-                .flatMap(userRepository::findByEmail)
-                .orElseThrow(RuntimeExceptionWhileDataFetching::unAuthorized);
+            .ofNullable(SecurityContextHolder.getContext())
+            .map(SecurityContext::getAuthentication)
+            .map(Authentication::getName)
+            .flatMap(userRepository::findByEmail);
+    }
+
+    public User getCurrentUser() {
+        return this.findCurrentUser().orElseThrow(RuntimeExceptionWhileDataFetching::unAuthorized);
     }
 }

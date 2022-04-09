@@ -1,5 +1,6 @@
 type Query {
     currentUser: AuthenticatedUser
+    currentUserWorkouts(pageableRequest: PageableRequest!): WorkoutPage
 }
 
 type Mutation {
@@ -7,7 +8,13 @@ type Mutation {
     register(email: String!, password: String!): AuthenticatedUser
 }
 
-type AuthenticatedUser {
-    email: String
-    authenticationToken: String
+input PageableRequest {
+    page: Int
+    pageSize: Int
+    direction: Direction
+    sort: String
+}
+
+enum Direction {
+    ASC, DESC
 }

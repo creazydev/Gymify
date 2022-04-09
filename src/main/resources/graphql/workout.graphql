@@ -1,0 +1,14 @@
+type Workout {
+    createdDate: String
+    modifiedDate: String
+    id: ID
+    user: User
+}
+
+type WorkoutPage {
+    content: [Workout]
+    totalElements: Int
+    totalPages: Int
+    number: Int
+    size: Int
+}
