@@ -1,4 +1,4 @@
-import {useTranslation} from "react-i18next";
+import {Trans, useTranslation} from "react-i18next";
 import {gql, useMutation} from "@apollo/client";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
@@ -43,7 +43,7 @@ export default function SignInForm({ onClose }) {
                 required
                 fullWidth
                 id="email"
-                label="Email Address"
+                label={t('email_address')}
                 name="email"
                 value={"test@mail.ruu"}
                 autoComplete="email"
@@ -54,7 +54,7 @@ export default function SignInForm({ onClose }) {
                 required
                 fullWidth
                 name="password"
-                label="Password"
+                label={t('password')}
                 type="password"
                 value={"sample"}
                 id="password"
@@ -68,17 +68,17 @@ export default function SignInForm({ onClose }) {
                 variant="contained"
                 sx={{mt: 3, mb: 2}}
             >
-                Sign In
+                {t('sign_in')}
             </Button>
             <Grid container>
                 <Grid item xs>
                     <Link href="#" variant="body2">
-                        Forgot password?
+                        {t('forget_password')}?
                     </Link>
                 </Grid>
                 <Grid item>
                     <Link href="#" variant="body2" onClick={onClose}>
-                        {"Don't have an account? Sign Up"}
+                        {t('dont_have_an_account')}? {t('sign_up')}
                     </Link>
                 </Grid>
             </Grid>

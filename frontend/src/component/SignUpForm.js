@@ -43,7 +43,7 @@ export default function SignUpForm({ onClose }) {
                 required
                 fullWidth
                 id="email"
-                label="Email Address"
+                label={t('email_address')}
                 name="email"
                 autoComplete="email"
                 autoFocus
@@ -53,7 +53,7 @@ export default function SignUpForm({ onClose }) {
                 required
                 fullWidth
                 name="password"
-                label="Password"
+                label={t('password')}
                 type="password"
                 id="password"
                 autoComplete="current-password"
@@ -66,12 +66,12 @@ export default function SignUpForm({ onClose }) {
                 variant="contained"
                 sx={{mt: 3, mb: 2}}
             >
-                Sign Up
+                {t('sign_up')}
             </Button>
             <Grid container>
                 <Grid item xs>
                     <Link href="#" variant="body2" onClick={onClose}>
-                        Already have account? Sign in!
+                        {t('already_have_account')}? {t('sign_in')}
                     </Link>
                 </Grid>
             </Grid>
