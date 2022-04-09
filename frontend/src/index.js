@@ -5,17 +5,21 @@ import "mdbreact/dist/css/mdb.css";
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
 
 import React from 'react';
-import ReactDOM, {render} from 'react-dom';
+import ReactDOM from 'react-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import {LanguageSelectionFooter} from "./component/LanguageSelectionFooter";
+import {LanguageSelectionFooter} from "./_component/LanguageSelectionFooter";
+import {client} from "./graphql/ApolloClient";
+import {ApolloProvider} from "@apollo/client";
 
 ReactDOM.render(
     <React.StrictMode>
-        <div className="content">
-            <App key="1"/>
-            <LanguageSelectionFooter key="2"/>
-        </div>
+        <ApolloProvider client={client}>
+            <div className="content">
+                <App key="1"/>
+                <LanguageSelectionFooter key="2"/>
+            </div>
+        </ApolloProvider>
     </React.StrictMode>,
     document.getElementById('root')
 );

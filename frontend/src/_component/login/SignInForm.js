@@ -7,6 +7,9 @@ import Alert from "@mui/material/Alert";
 import Button from "@mui/material/Button";
 import Link from "@mui/material/Link";
 import * as React from "react";
+import { authAtom } from '../../_state';
+import {useSetRecoilState} from "recoil";
+import {Navigate} from "react-router-dom";
 
 const LOGIN_MUTATION = gql`
     mutation LoginMutation($email: String!$password: String!) {
@@ -20,9 +23,11 @@ const LOGIN_MUTATION = gql`
 export default function SignInForm({ onClose }) {
     const { t, i18n } = useTranslation();
     const [signIn, { data, loading, error, reset }] = useMutation(LOGIN_MUTATION);
+    const setAuth = useSetRecoilState(authAtom);
 
     if (data) {
-        return data.login.email;
+        setAuth(data.login.authenticationToken);
+        return <Navigate to="/" />;
     }
 
     return (
@@ -45,7 +50,7 @@ export default function SignInForm({ onClose }) {
                 id="email"
                 label={t('email_address')}
                 name="email"
-                value={"test@mail.ruu"}
+                value={"test@mail.ru"}
                 autoComplete="email"
                 autoFocus
             />
