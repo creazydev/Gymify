@@ -4,6 +4,7 @@ type Query {
 
 type Mutation {
     login(email: String!, password: String!): AuthenticatedUser
+    register(email: String!, password: String!): AuthenticatedUser
 }
 
 type AuthenticatedUser {

@@ -15,6 +15,9 @@ import {gql, useMutation} from "@apollo/client";
 import { useTranslation } from "react-i18next";
 import "../translations/i18n";
 import {IconButton} from "@mui/material";
+import SignUpForm from './SignUpForm'
+import SignInForm from "./SignInForm";
+import {useState} from "react";
 
 const theme = createTheme();
 
@@ -27,10 +30,21 @@ const LOGIN_MUTATION = gql`
     }
 `;
 
-export default function SignIn() {
+export default class SignIn extends Component {
+    const [state, setState] = useState({
+        displaySignInForm: false
+    });
+
     const { t, i18n } = useTranslation();
     const [signIn, { data, loading, error, reset }] = useMutation(LOGIN_MUTATION);
+    const onSave = () => {
+        const newState = setState((prevState) => {
+            console.log(prevState);
+            return {displaySignInForm: true};
+        });
 
+        console.log(newState);
+    };
     if (data) {
         return data.login.email;
     }
@@ -72,65 +86,13 @@ export default function SignIn() {
                             <LockOutlinedIcon/>
                         </Avatar>
                         <Typography component="h1" variant="h5">
-                            {t("sign_in")}
+                            {state.displaySignInForm}
+                            {state.displaySignInForm ? t("sign_in") : t("sign_up")}
                         </Typography>
-                        <Box component="form"
-                             onSubmit={e => {
-                                 e.preventDefault();
-                                 const formData = new FormData(e.currentTarget)
-                                 signIn({
-                                     variables: {
-                                         email: formData.get("email"),
-                                         password: formData.get("password")
-                                     }
-                                 }).then()
-                             }}
-                             noValidate sx={{mt: 1}}>
-                            <TextField
-                                margin="normal"
-                                required
-                                fullWidth
-                                id="email"
-                                label="Email Address"
-                                name="email"
-                                value={"test@mail.ruu"}
-                                autoComplete="email"
-                                autoFocus
-                            />
-                            <TextField
-                                margin="normal"
-                                required
-                                fullWidth
-                                name="password"
-                                label="Password"
-                                type="password"
-                                value={"sample"}
-                                id="password"
-                                autoComplete="current-password"
-                            />
-                            {error ? (<Alert severity="error">{error.message}</Alert>) : null}
-                            <Button
-                                type="submit"
-                                fullWidth
-                                disabled={loading}
-                                variant="contained"
-                                sx={{mt: 3, mb: 2}}
-                            >
-                                Sign In
-                            </Button>
-                            <Grid container>
-                                <Grid item xs>
-                                    <Link href="#" variant="body2">
-                                        Forgot password?
-                                    </Link>
-                                </Grid>
-                                <Grid item>
-                                    <Link href="#" variant="body2">
-                                        {"Don't have an account? Sign Up"}
-                                    </Link>
-                                </Grid>
-                            </Grid>
-                        </Box>
+                        {state.displaySignInForm
+                            ? <SignInForm onClose={setState({displaySignInForm: false})}/>
+                            : <SignUpForm onClose={onSave}/>
+                        }
                     </Box>
                 </Grid>
             </Grid>
