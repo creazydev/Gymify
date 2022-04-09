@@ -15,6 +15,8 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import {mainListItems, secondaryListItems} from "./navbarItems";
+import {Logout} from "@mui/icons-material";
+import { useUserActions } from '../../_action';
 
 const drawerWidth = 240;
 
@@ -105,6 +107,9 @@ function DashboardContent() {
                             <Badge badgeContent={4} color="secondary">
                                 <NotificationsIcon />
                             </Badge>
+                        </IconButton>
+                        <IconButton color="inherit" onClick={useUserActions().logout}>
+                            <Logout/>
                         </IconButton>
                     </Toolbar>
                 </AppBar>

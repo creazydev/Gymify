@@ -16,7 +16,7 @@ import {useState} from "react";
 const theme = createTheme();
 
 export default function SignIn() {
-    const [displaySignInForm, setDisplaySignInForm] = useState(false);
+    const [displaySignInForm, setDisplaySignInForm] = useState(true);
     const { t, i18n } = useTranslation();
 
     const toggleDisplaySignInForm = () => {
