@@ -2,17 +2,16 @@ package com.github.Gymify;
 
 import com.github.Gymify.persistence.entity.Period;
 import com.github.Gymify.persistence.entity.User;
-import com.github.Gymify.persistence.entity.Workout;
+import com.github.Gymify.persistence.entity.WorkoutSession;
 import com.github.Gymify.persistence.enums.UserAuthority;
 import com.github.Gymify.persistence.repository.UserRepository;
-import com.github.Gymify.persistence.repository.WorkoutRepository;
+import com.github.Gymify.persistence.repository.WorkoutSessionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
-import java.time.LocalDateTime;
 import java.util.Set;
 import java.util.stream.Stream;
 
@@ -23,12 +22,12 @@ import java.util.stream.Stream;
 public class Bootstrap {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-    private final WorkoutRepository workoutRepository;
+    private final WorkoutSessionRepository workoutRepository;
 
     @PostConstruct
     void init() {
         this.addSampleUsers();
-        this.addSampleWorkouts();
+        this.addSampleWorkoutPlans();
     }
 
     private void addSampleUsers() {
@@ -43,16 +42,7 @@ public class Bootstrap {
             .forEachOrdered(userRepository::save);
     }
 
-    private void addSampleWorkouts() {
+    private void addSampleWorkoutPlans() {
         User testUser = this.userRepository.findByEmail("test@mail.ru").orElseThrow(IllegalStateException::new);
-        this.workoutRepository.findAll();
-        Stream.of(
-                Workout.builder()
-                    .user(testUser)
-                    .period(Period.of(System.currentTimeMillis(), System.currentTimeMillis()))
-                    .build()
-            )
-            .sequential()
-            .forEachOrdered(workoutRepository::save);
     }
 }

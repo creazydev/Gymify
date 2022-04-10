@@ -3,7 +3,7 @@ scalar Timestamp
 
 type Query {
     currentUser: AuthenticatedUser
-    currentUserWorkouts(pageableRequest: PageableRequest!, filter: Filter!): WorkoutPage
+    currentUserWorkoutSessions(pageableRequest: PageableRequest!, filter: Filter!): WorkoutSessionPage
 }
 
 type Mutation {

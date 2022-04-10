@@ -3,8 +3,8 @@ package com.github.Gymify.core.resolver;
 import com.github.Gymify.core.dto.PageableRequest;
 import com.github.Gymify.core.filter.GraphQLFilterChain;
 import com.github.Gymify.core.filter.GraphQLSpecificationFilter;
-import com.github.Gymify.core.service.WorkoutService;
-import com.github.Gymify.persistence.entity.Workout;
+import com.github.Gymify.core.service.WorkoutSessionService;
+import com.github.Gymify.persistence.entity.WorkoutSession;
 import com.github.Gymify.security.service.UserService;
 import com.github.Gymify.user.model.AuthenticatedUser;
 import graphql.kickstart.tools.GraphQLQueryResolver;
@@ -16,16 +16,16 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class QueryResolver implements GraphQLQueryResolver {
     private final UserService userService;
-    private final WorkoutService workoutService;
+    private final WorkoutSessionService workoutSessionService;
 
     public AuthenticatedUser getCurrentUser() {
         return new AuthenticatedUser(userService.getCurrentUser(), null);
     }
 
-    public Page<Workout> getCurrentUserWorkouts(PageableRequest pageableRequest, GraphQLFilterChain filter) {
-        return this.workoutService.getAllByCurrentUserId(
+    public Page<WorkoutSession> getCurrentUserWorkoutSessions(PageableRequest pageableRequest, GraphQLFilterChain filter) {
+        return this.workoutSessionService.getAllByCurrentUserId(
             pageableRequest.getPageable(),
-            new GraphQLSpecificationFilter<Workout>(filter).getSpecification()
+            new GraphQLSpecificationFilter<WorkoutSession>(filter).getSpecification()
         );
     }
 }

@@ -1,13 +1,12 @@
-type Workout {
+type WorkoutSession {
     creationTimestamp: Timestamp
     updateTimestamp: Timestamp
     id: ID
     user: User
-    period: Period
 }
 
-type WorkoutPage {
-    content: [Workout]
+type WorkoutSessionPage {
+    content: [WorkoutSession]
     totalElements: Int
     totalPages: Int
     number: Int
