@@ -19,10 +19,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.util.Collection;
-import java.util.EnumSet;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 @Entity
 @Table(name = "application_user")
@@ -61,7 +58,9 @@ public class User implements UserDetails {
     public User(String email, String password, Collection<UserAuthority> authorities) {
         this.email = email;
         this.password = password;
-        this.authorities = EnumSet.copyOf(authorities);
+        this.authorities = Objects.isNull(authorities) || authorities.isEmpty()
+            ? EnumSet.noneOf(UserAuthority.class)
+            : EnumSet.copyOf(authorities);
         this.accountNonExpired = true;
         this.accountNonLocked = true;
         this.credentialsNonExpired = true;
