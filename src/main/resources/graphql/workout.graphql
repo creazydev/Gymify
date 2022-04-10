@@ -1,6 +1,6 @@
 type Workout {
-    createdDate: DateTime
-    modifiedDate: DateTime
+    creationTimestamp: Timestamp
+    updateTimestamp: Timestamp
     id: ID
     user: User
     period: Period
@@ -12,15 +12,4 @@ type WorkoutPage {
     totalPages: Int
     number: Int
     size: Int
-}
-
-input WorkoutFilter {
-    createdDate: DateTimeExpression
-    modifiedDate: DateTimeExpression
-    period: PeriodFilter
-    id: IntExpression
-
-    and: [WorkoutFilter!]
-    or: [WorkoutFilter!]
-    not: WorkoutFilter
 }

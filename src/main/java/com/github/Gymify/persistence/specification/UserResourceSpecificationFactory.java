@@ -1,6 +1,5 @@
 package com.github.Gymify.persistence.specification;
 
-import com.github.Gymify.persistence.auditing.AuditedEntity;
 import com.github.Gymify.persistence.entity.UserResource;
 import org.springframework.data.jpa.domain.Specification;
 

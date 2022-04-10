@@ -49,7 +49,7 @@ public class Bootstrap {
         Stream.of(
                 Workout.builder()
                     .user(testUser)
-                    .period(Period.of(LocalDateTime.now(), LocalDateTime.now().plusHours(2)))
+                    .period(Period.of(System.currentTimeMillis(), System.currentTimeMillis()))
                     .build()
             )
             .sequential()

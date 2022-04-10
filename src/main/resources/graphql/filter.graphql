@@ -1,3 +1,11 @@
+input Filter {
+    path: [String]
+    stringExpression: StringExpression
+    longExpression: LongExpression
+    intExpression: IntExpression
+    and: Filter
+}
+
 input StringExpression {
     equals: String
     contains: String
@@ -11,12 +19,14 @@ input IntExpression {
     lte: Int
 }
 
-input DateTimeExpression {
-    eq: DateTime
-    gt: DateTime
-    gte: DateTime
-    lt: DateTime
-    lte: DateTime
-    between: [DateTime!]
+input LongExpression {
+    eq: Long
+    gt: Long
+    gte: Long
+    lt: Long
+    lte: Long
+    between: [Long!]
 }
+
+
 

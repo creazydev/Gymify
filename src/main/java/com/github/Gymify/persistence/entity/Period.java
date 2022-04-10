@@ -6,8 +6,9 @@ import lombok.NoArgsConstructor;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import java.time.Duration;
+import java.time.Instant;
 import java.time.LocalDateTime;
-import java.util.Objects;
+import java.util.TimeZone;
 
 @Embeddable
 
@@ -15,51 +16,58 @@ import java.util.Objects;
 @Getter
 public class Period implements Comparable<Period> {
 
-    @Column(name = "period_begin", nullable = false)
-    private LocalDateTime periodBegin;
+    @Column(name = "period_begin_timestamp", nullable = false)
+    private Long periodBeginTimestamp;
 
-    @Column(name = "period_due", nullable = false)
-    private LocalDateTime periodDue;
+    @Column(name = "period_due_timestamp", nullable = false)
+    private Long periodDueTimestamp;
 
     @Column(name = "period_duration", nullable = false)
     private Duration periodDuration;
 
-    public Period(LocalDateTime periodBegin, LocalDateTime periodDue) {
-        this.periodBegin = periodBegin;
-        this.periodDue = periodDue;
-        this.periodDuration = Duration.between(periodBegin, periodDue);
+    public Period(Long periodBeginTimestamp, Long periodDueTimestamp) {
+        this.periodBeginTimestamp = periodBeginTimestamp;
+        this.periodDueTimestamp = periodDueTimestamp;
+        this.periodDuration = Duration.between(
+            timestampToLocalDateTime(periodBeginTimestamp),
+            timestampToLocalDateTime(periodDueTimestamp)
+        );
     }
 
     @Override
     public int compareTo(Period period) {
-        if (this.periodBegin.isBefore(period.getPeriodBegin())) {
+        if (this.getPeriodBeginTimestamp() < period.getPeriodBeginTimestamp()) {
             return 1;
-        } else if (period.getPeriodBegin().isBefore(this.periodDue)) {
+        } else if (period.getPeriodBeginTimestamp() < this.getPeriodDueTimestamp()) {
             return -1;
         } else {
             return 0;
         }
     }
 
-    public static Period of(LocalDateTime periodBegin, LocalDateTime periodDue) {
-        return new Period(periodBegin, periodDue);
+    public static LocalDateTime timestampToLocalDateTime(Long timestamp) {
+        Instant instant = Instant.ofEpochMilli(timestamp);
+        return LocalDateTime.ofInstant(instant, TimeZone.getDefault().toZoneId());
+    }
+
+    public static Period of(Long periodBeginTimestamp, Long periodDueTimestamp) {
+        return new Period(periodBeginTimestamp, periodDueTimestamp);
     }
 
     public static Period between(Period period, Period period2) {
-        return Period.of(period.getPeriodDue(), period2.getPeriodBegin());
+        return Period.of(period.getPeriodDueTimestamp(), period2.getPeriodBeginTimestamp());
     }
 
-    public boolean inPeriod(LocalDateTime localDateTime) {
-        return Objects.nonNull(localDateTime)
-            && !this.getPeriodBegin().isAfter(localDateTime)
-            && !localDateTime.isAfter(this.getPeriodDue());
+    public boolean inPeriod(Long timestamp) {
+        return !(this.getPeriodBeginTimestamp() > timestamp)
+            && !(timestamp > this.getPeriodDueTimestamp());
     }
 
     public boolean isOverlapping(Period period) {
-        return this.isOverlapping(period.getPeriodBegin(), period.getPeriodDue());
+        return this.isOverlapping(period.getPeriodBeginTimestamp(), period.getPeriodDueTimestamp());
     }
 
-    public boolean isOverlapping(LocalDateTime periodBegin, LocalDateTime periodDue) {
-        return this.getPeriodBegin().isBefore(periodDue) && periodBegin.isBefore(this.getPeriodDue());
+    public boolean isOverlapping(Long periodBeginTimestamp, Long periodDueTimestamp) {
+        return this.getPeriodBeginTimestamp() < periodDueTimestamp && periodBeginTimestamp < this.getPeriodDueTimestamp();
     }
 }

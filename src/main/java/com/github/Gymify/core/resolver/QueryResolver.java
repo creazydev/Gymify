@@ -1,6 +1,8 @@
 package com.github.Gymify.core.resolver;
 
 import com.github.Gymify.core.dto.PageableRequest;
+import com.github.Gymify.core.filter.GraphQLFilterChain;
+import com.github.Gymify.core.filter.GraphQLSpecificationFilter;
 import com.github.Gymify.core.service.WorkoutService;
 import com.github.Gymify.persistence.entity.Workout;
 import com.github.Gymify.security.service.UserService;
@@ -20,7 +22,10 @@ public class QueryResolver implements GraphQLQueryResolver {
         return new AuthenticatedUser(userService.getCurrentUser(), null);
     }
 
-    public Page<Workout> getCurrentUserWorkouts(PageableRequest pageableRequest) {
-        return this.workoutService.getAllByCurrentUserId(pageableRequest.getPageable());
+    public Page<Workout> getCurrentUserWorkouts(PageableRequest pageableRequest, GraphQLFilterChain filter) {
+        return this.workoutService.getAllByCurrentUserId(
+            pageableRequest.getPageable(),
+            new GraphQLSpecificationFilter<Workout>(filter).getSpecification()
+        );
     }
 }
