@@ -22,7 +22,7 @@ public class WorkoutPlan extends UserResource {
 
     @ManyToMany
     @JoinColumn(name = "workout_plan_id", referencedColumnName = "id")
-    private List<WorkoutSession> workouts;
+    private List<WorkoutSession> workoutSessions;
 
     @Column(name = "active", nullable = false)
     private Boolean active;

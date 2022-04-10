@@ -11,6 +11,7 @@ import java.time.LocalTime;
 import java.util.List;
 
 @Entity
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 
 @NoArgsConstructor
 @Getter

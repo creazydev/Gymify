@@ -14,6 +14,7 @@ import java.util.EnumSet;
 import java.util.List;
 
 @Entity
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @TypeDef(
     name = "enum-set",
     typeClass = EnumSetType.class
@@ -44,6 +45,6 @@ public class Exercise extends UserResource {
     @JoinColumn(name = "equipment_id", referencedColumnName = "id")
     private Equipment equipment;
 
-    @Column(name = "reps_duration", nullable = false)
-    private Integer restDuration;
+    @Column(name = "planned_rest_duration")
+    private Integer plannedRestDuration;
 }
