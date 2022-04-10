@@ -1,0 +1,8 @@
+type AuthenticatedUser {
+    email: String
+    authenticationToken: String
+}
+
+type User {
+    email: String
+}

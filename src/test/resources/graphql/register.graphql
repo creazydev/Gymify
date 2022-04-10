@@ -1,0 +1,6 @@
+mutation{
+    register(email: "email@test.com", password: "test1234"){
+        authenticationToken
+        email
+    }
+}

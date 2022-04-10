@@ -1,0 +1,32 @@
+input Filter {
+    path: [String]
+    stringExpression: StringExpression
+    longExpression: LongExpression
+    intExpression: IntExpression
+    and: Filter
+}
+
+input StringExpression {
+    equals: String
+    contains: String
+}
+
+input IntExpression {
+    eq: Int
+    gt: Int
+    gte: Int
+    lt: Int
+    lte: Int
+}
+
+input LongExpression {
+    eq: Long
+    gt: Long
+    gte: Long
+    lt: Long
+    lte: Long
+    between: [Long!]
+}
+
+
+

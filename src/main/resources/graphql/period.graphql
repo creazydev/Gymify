@@ -1,0 +1,9 @@
+type Period {
+    periodBeginTimestamp: Long
+    periodDueTimestamp: Long
+    periodDuration: Duration
+}
+
+type Duration {
+    seconds: Long
+}

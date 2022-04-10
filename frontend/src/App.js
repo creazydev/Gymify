@@ -1,25 +1,30 @@
-import logo from './logo.svg';
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import SignIn from './_component/login/SignIn';
+
+import Dashboard from "./_component/dashboard/Dashboard";
+import React, {useState} from "react";
+import {BrowserRouter, Route, Routes, Navigate} from 'react-router-dom';
+import {PrivateRoute} from "./_component/PrivateRoute";
+import {RecoilRoot} from "recoil";
+
+
+const App = () => {
+    return (
+        <div>
+            <RecoilRoot>
+                <BrowserRouter>
+                    <Routes>
+                        <Route exact path='/' element={<PrivateRoute/>}>
+                            <Route exact path='/' element={<Dashboard/>}/>
+                        </Route>
+                        <Route exact path='/login' element={<SignIn/>}/>
+                    </Routes>
+                </BrowserRouter>
+                <footer style={{position: "fixed", bottom: "0"}}/>
+            </RecoilRoot>
+        </div>
+    );
 }
 
 export default App;

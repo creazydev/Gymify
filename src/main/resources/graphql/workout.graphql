@@ -1,0 +1,15 @@
+type Workout {
+    creationTimestamp: Timestamp
+    updateTimestamp: Timestamp
+    id: ID
+    user: User
+    period: Period
+}
+
+type WorkoutPage {
+    content: [Workout]
+    totalElements: Int
+    totalPages: Int
+    number: Int
+    size: Int
+}

@@ -1,0 +1,23 @@
+scalar Long
+scalar Timestamp
+
+type Query {
+    currentUser: AuthenticatedUser
+    currentUserWorkouts(pageableRequest: PageableRequest!, filter: Filter!): WorkoutPage
+}
+
+type Mutation {
+    login(email: String!, password: String!): AuthenticatedUser
+    register(email: String!, password: String!): AuthenticatedUser
+}
+
+input PageableRequest {
+    page: Int
+    pageSize: Int
+    direction: Direction
+    sort: String
+}
+
+enum Direction {
+    ASC, DESC
+}
