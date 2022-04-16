@@ -4,6 +4,8 @@ import com.github.Gymify.persistence.entity.UserResource;
 import com.github.Gymify.persistence.repository.UserResourceRepository;
 import com.github.Gymify.persistence.specification.UserResourceSpecificationFactory;
 import com.github.Gymify.security.service.UserService;
+import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -13,10 +15,12 @@ import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
+@Getter(value = AccessLevel.PROTECTED)
 public abstract class UserResourceService<T extends UserResource> implements CrudService<T, Long> {
-    protected final UserResourceRepository<T> userResourceRepository;
-    protected final UserService userService;
-    protected final UserResourceSpecificationFactory<T> specificationFactory;
+    private final UserResourceRepository<T> userResourceRepository;
+    private final UserService userService;
+    private final UserResourceSpecificationFactory<T> specificationFactory;
+
 
     @Override
     public Optional<T> find(Long id) {
@@ -53,7 +57,7 @@ public abstract class UserResourceService<T extends UserResource> implements Cru
         return this.userResourceRepository.findAll(specification.and(currentUserSpecification()), pageable);
     }
 
-    private Specification<T> currentUserSpecification() {
+    protected Specification<T> currentUserSpecification() {
         return this.specificationFactory.userIdEquals(userService.getCurrentUser().getId());
     }
 }

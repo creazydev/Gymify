@@ -6,4 +6,5 @@ import org.springframework.data.jpa.domain.Specification;
 public interface EntitySpecificationFactory<T, K> {
 
     Specification<T> idEquals(K id);
+    Specification<T> idNotEquals(K id);
 }

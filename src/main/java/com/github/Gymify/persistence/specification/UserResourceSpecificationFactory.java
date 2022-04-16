@@ -11,6 +11,11 @@ public abstract class UserResourceSpecificationFactory<T extends UserResource>
         return (root, cq, cb) -> cb.equal(root.get("id"), id);
     }
 
+    @Override
+    public Specification<T> idNotEquals(Long id) {
+        return (root, cq, cb) -> cb.notEqual(root.get("id"), id);
+    }
+
     public Specification<T> userIdEquals(Long userId) {
         return (root, cq, cb) -> cb.equal(root.get("user").get("id"), userId);
     }
