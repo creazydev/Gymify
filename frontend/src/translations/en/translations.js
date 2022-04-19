@@ -6,6 +6,10 @@ export const TRANSLATIONS_EN = {
     password: "Password",
     email_address: "Email Address",
     forget_password: "Forget password",
-    "dont_have_an_account": "Don't have an account",
-    "already_have_account": "Already have account"
+    dont_have_an_account: "Don't have an account",
+    already_have_account: "Already have account",
+    workout_plans: "Workout plans",
+    home: "Home",
+    settings: "Settings",
+    settings_and_tools: "Settings and tools"
 };

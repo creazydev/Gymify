@@ -9,64 +9,52 @@ import PeopleIcon from '@mui/icons-material/People';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import LayersIcon from '@mui/icons-material/Layers';
 import AssignmentIcon from '@mui/icons-material/Assignment';
+import {Link} from 'react-router-dom';
+import {useTranslation} from "react-i18next";
 
-export const mainListItems = (
-    <React.Fragment>
-        <ListItemButton>
-            <ListItemIcon>
-                <DashboardIcon />
-            </ListItemIcon>
-            <ListItemText primary="Dashboard" />
-        </ListItemButton>
-        <ListItemButton>
-            <ListItemIcon>
-                <ShoppingCartIcon />
-            </ListItemIcon>
-            <ListItemText primary="Orders" />
-        </ListItemButton>
-        <ListItemButton>
-            <ListItemIcon>
-                <PeopleIcon />
-            </ListItemIcon>
-            <ListItemText primary="Customers" />
-        </ListItemButton>
-        <ListItemButton>
-            <ListItemIcon>
-                <BarChartIcon />
-            </ListItemIcon>
-            <ListItemText primary="Reports" />
-        </ListItemButton>
-        <ListItemButton>
-            <ListItemIcon>
-                <LayersIcon />
-            </ListItemIcon>
-            <ListItemText primary="Integrations" />
-        </ListItemButton>
-    </React.Fragment>
-);
+export const MainNavBarItemList = () => {
+    const { t, i18n } = useTranslation();
+    return (
+        <div>
+            <React.Fragment>
+                <Link to={"/"}>
+                    <ListItemButton>
+                        <ListItemIcon>
+                            <DashboardIcon/>
+                        </ListItemIcon>
+                        <ListItemText primary={t('home')}/>
+                    </ListItemButton>
+                </Link>
+                <Link to="/workout-plans">
+                    <ListItemButton>
+                        <ListItemIcon>
+                            <ShoppingCartIcon/>
+                        </ListItemIcon>
+                        <ListItemText primary={t('workout_plans')}/>
+                    </ListItemButton>
+                </Link>
+            </React.Fragment>
+        </div>
+    );
+}
 
-export const secondaryListItems = (
-    <React.Fragment>
-        <ListSubheader component="div" inset>
-            Saved reports
-        </ListSubheader>
-        <ListItemButton>
-            <ListItemIcon>
-                <AssignmentIcon />
-            </ListItemIcon>
-            <ListItemText primary="Current month" />
-        </ListItemButton>
-        <ListItemButton>
-            <ListItemIcon>
-                <AssignmentIcon />
-            </ListItemIcon>
-            <ListItemText primary="Last quarter" />
-        </ListItemButton>
-        <ListItemButton>
-            <ListItemIcon>
-                <AssignmentIcon />
-            </ListItemIcon>
-            <ListItemText primary="Year-end sale" />
-        </ListItemButton>
-    </React.Fragment>
-);
+export const SettingsAndToolsNavBarItemList = () => {
+    const { t, i18n } = useTranslation();
+    return (
+        <div>
+            <React.Fragment>
+                <ListSubheader component="div" inset>
+                    {t('settings_and_tools')}
+                </ListSubheader>
+                <Link to={"/settings"}>
+                    <ListItemButton>
+                        <ListItemIcon>
+                            <AssignmentIcon/>
+                        </ListItemIcon>
+                        <ListItemText primary={t('settings')}/>
+                    </ListItemButton>
+                </Link>
+            </React.Fragment>
+        </div>
+    );
+}

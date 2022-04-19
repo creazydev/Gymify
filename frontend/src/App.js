@@ -7,6 +7,10 @@ import React, {useState} from "react";
 import {BrowserRouter, Route, Routes, Navigate} from 'react-router-dom';
 import {PrivateRoute} from "./_component/PrivateRoute";
 import {RecoilRoot} from "recoil";
+import DashboardDefaultContent from "./_component/dashboard/DashboardDefaultContent";
+import WorkoutPlans from "./_component/dashboard/workout-plans/WorkoutPlans";
+import Home from "./_component/dashboard/home/Home";
+import Settings from "./_component/dashboard/settings/Settings";
 
 
 const App = () => {
@@ -15,8 +19,12 @@ const App = () => {
             <RecoilRoot>
                 <BrowserRouter>
                     <Routes>
-                        <Route exact path='/' element={<PrivateRoute/>}>
-                            <Route exact path='/' element={<Dashboard/>}/>
+                        <Route element={<PrivateRoute/>}>
+                            <Route element={<Dashboard/>}>
+                                <Route path='/' element={<Home/>}/>
+                                <Route path='workout-plans' element={<WorkoutPlans/>}/>
+                                <Route path='settings' element={<Settings/>}/>
+                            </Route>
                         </Route>
                         <Route exact path='/login' element={<SignIn/>}/>
                     </Routes>
