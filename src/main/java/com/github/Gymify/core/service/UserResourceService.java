@@ -45,6 +45,11 @@ public abstract class UserResourceService<T extends UserResource> implements Cru
             .ifPresent(this.userResourceRepository::delete);
     }
 
+    public Optional<T> find(Specification<T> specification) {
+        return this.userResourceRepository
+                .findOne(specification.and(this.currentUserSpecification()));
+    }
+
     public List<T> getAllByCurrentUserId() {
         return this.userResourceRepository.findAllByUserId(this.userService.getCurrentUser().getId());
     }
