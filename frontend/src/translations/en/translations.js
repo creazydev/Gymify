@@ -16,5 +16,9 @@ export const TRANSLATIONS_EN = {
     created_on: "Created on",
     updated_on: "Updated on",
     actions: "Actions",
-    activate: "Activate"
+    activate: "Activate",
+    profile: "Profile",
+    workout: "Workout",
+    notification: "Notification",
+    security: "Security"
 };

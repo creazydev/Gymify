@@ -16,5 +16,9 @@ export const TRANSLATIONS_PL = {
     created_on: "Utworzony o",
     updated_on: "Ostatnia zmiana o",
     actions: "Akcje",
-    activate: "Aktywuj"
+    activate: "Aktywuj",
+    profile: "Profil",
+    workout: "Trening",
+    notification: "Powiadomienia",
+    security: "Bezpieczeństwo"
 };
