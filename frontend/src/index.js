@@ -11,15 +11,21 @@ import reportWebVitals from './reportWebVitals';
 import {LanguageSelectionFooter} from "./_component/LanguageSelectionFooter";
 import {client} from "./graphql/ApolloClient";
 import {ApolloProvider} from "@apollo/client";
+import {RecoilRoot} from "recoil";
+import RecoilNexus from 'recoil-nexus'
 
 ReactDOM.render(
     <React.StrictMode>
-        <ApolloProvider client={client}>
-            <div className="content">
-                <App key="1"/>
-                <LanguageSelectionFooter key="2"/>
-            </div>
-        </ApolloProvider>
+        <RecoilRoot>
+            <RecoilNexus/>
+
+            <ApolloProvider client={client}>
+                <div className="content">
+                    <App key="1"/>
+                    <LanguageSelectionFooter key="2"/>
+                </div>
+            </ApolloProvider>
+        </RecoilRoot>
     </React.StrictMode>,
     document.getElementById('root')
 );

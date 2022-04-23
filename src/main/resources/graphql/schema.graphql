@@ -4,6 +4,7 @@ scalar Timestamp
 type Query {
     currentUser: AuthenticatedUser
     currentUserWorkoutSessions(pageableRequest: PageableRequest!, filter: Filter!): WorkoutSessionPage
+    currentUserWorkoutPlans(pageableRequest: PageableRequest!, filter: Filter!): WorkoutPlanPage
 }
 
 type Mutation {
@@ -20,4 +21,20 @@ input PageableRequest {
 
 enum Direction {
     ASC, DESC
+}
+
+interface AuditedEntity {
+    creationTimestamp: Timestamp,
+    updateTimestamp: Timestamp,
+    createdByUserId: Int,
+    modifiedByUserId: Int
+}
+
+interface UserResource {
+    creationTimestamp: Timestamp,
+    updateTimestamp: Timestamp,
+    createdByUserId: Int,
+    modifiedByUserId: Int
+    id: Int,
+    user: User
 }

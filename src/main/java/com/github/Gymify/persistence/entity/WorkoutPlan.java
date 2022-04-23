@@ -1,5 +1,6 @@
 package com.github.Gymify.persistence.entity;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -26,4 +27,12 @@ public class WorkoutPlan extends UserResource {
 
     @Column(name = "active", nullable = false)
     private Boolean active;
+
+    @Builder
+    public WorkoutPlan(String name, List<WorkoutSession> workoutSessions, Boolean active, User user) {
+        this.name = name;
+        this.workoutSessions = workoutSessions;
+        this.active = active;
+        this.user = user;
+    }
 }

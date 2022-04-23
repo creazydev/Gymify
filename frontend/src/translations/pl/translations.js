@@ -11,5 +11,10 @@ export const TRANSLATIONS_PL = {
     workout_plans: "Plany treningowe",
     home: "Strona główna",
     settings: "Ustawienia",
-    settings_and_tools: "Ustawienia i narządzia"
+    settings_and_tools: "Ustawienia i narządzia",
+    name: "Nazwa",
+    created_on: "Utworzony o",
+    updated_on: "Ostatnia zmiana o",
+    actions: "Akcje",
+    activate: "Aktywuj"
 };

@@ -150,7 +150,7 @@ function DashboardContent() {
                     }}
                 >
                     <Toolbar/>
-                    <Container maxWidth="lg" sx={{mt: 4, mb: 4}}>
+                    <Container sx={{m: 0, mt: 2, p: 0}} maxWidth={false}>
                         <Outlet />
                     </Container>
                 </Box>
