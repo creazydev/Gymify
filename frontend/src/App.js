@@ -9,6 +9,7 @@ import {PrivateRoute} from "./_component/PrivateRoute";
 import WorkoutPlans from "./_component/dashboard/workout-plans/WorkoutPlans";
 import Home from "./_component/dashboard/home/Home";
 import Settings from "./_component/dashboard/settings/Settings";
+import WorkoutPlanForm from "./_component/dashboard/workout-plans/WorkoutPlanForm";
 
 
 const App = () => {
@@ -20,6 +21,7 @@ const App = () => {
                         <Route element={<Dashboard/>}>
                             <Route path='/' element={<Home/>}/>
                             <Route path='workout-plans' element={<WorkoutPlans/>}/>
+                            <Route path='workout-plans/:id' element={<WorkoutPlanForm/>}/>
                             <Route path='settings' element={<Settings/>}/>
                         </Route>
                     </Route>

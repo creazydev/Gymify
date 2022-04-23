@@ -16,6 +16,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import IconButton from '@mui/material/IconButton';
 import {useTranslation} from "react-i18next";
 import {PhotoCamera} from "@mui/icons-material";
+import {Link} from "react-router-dom";
 
 const WORKOUT_PLAN_PAGE_QUERY = gql`
     query WORKOUT_PLAN_PAGE_QUERY(
@@ -159,9 +160,14 @@ export default function WorkoutPlanTable() {
                                                     {t('activate')}
                                                 </Button>
                                             }
-                                            <IconButton color="secondary" aria-label="" component="span" size="small">
-                                                <EditIcon />
-                                            </IconButton>
+                                            <Link to={`/workout-plans/${row.id}`}>
+                                                <IconButton color="secondary"
+                                                            aria-label=""
+                                                            component="span"
+                                                            size="small">
+                                                    <EditIcon />
+                                                </IconButton>
+                                            </Link>
                                             <IconButton color="error" aria-label="" component="span" size="small">
                                                 <DeleteIcon />
                                             </IconButton>
