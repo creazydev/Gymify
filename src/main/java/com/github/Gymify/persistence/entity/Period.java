@@ -8,6 +8,7 @@ import javax.persistence.Embeddable;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.TimeZone;
 
 @Embeddable
@@ -48,6 +49,10 @@ public class Period implements Comparable<Period> {
     public static LocalDateTime timestampToLocalDateTime(Long timestamp) {
         Instant instant = Instant.ofEpochMilli(timestamp);
         return LocalDateTime.ofInstant(instant, TimeZone.getDefault().toZoneId());
+    }
+
+    public static Long localDateTimeToTimestamp(LocalDateTime localDateTime) {
+        return localDateTime.toInstant(ZoneOffset.ofHours(0)).toEpochMilli();
     }
 
     public static Period of(Long periodBeginTimestamp, Long periodDueTimestamp) {

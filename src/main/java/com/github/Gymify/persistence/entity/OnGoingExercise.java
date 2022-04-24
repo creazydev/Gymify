@@ -8,11 +8,12 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 
 @NoArgsConstructor
 @Getter
 @Setter
-public class CompletedExercise extends Exercise {
+public class OnGoingExercise extends Exercise {
 
     @OneToMany(
             orphanRemoval = true,
@@ -21,6 +22,7 @@ public class CompletedExercise extends Exercise {
     @JoinColumn(name = "completed_exercise_id", referencedColumnName = "id")
     private List<CompletedSet> completedSets;
 
-    @Column(name = "actual_rest_duration")
-    private Integer actualRestDuration;
+    @OneToOne
+    @JoinColumn(name = "scheduled_workout_sesson_id", referencedColumnName = "id")
+    private ScheduledWorkoutSession scheduledWorkoutSession;
 }

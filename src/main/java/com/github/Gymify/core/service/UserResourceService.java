@@ -1,12 +1,15 @@
 package com.github.Gymify.core.service;
 
+import com.github.Gymify.exception.RuntimeExceptionWhileDataFetching;
 import com.github.Gymify.persistence.entity.UserResource;
+import com.github.Gymify.persistence.entity.WorkoutPlan;
 import com.github.Gymify.persistence.repository.UserResourceRepository;
 import com.github.Gymify.persistence.specification.UserResourceSpecificationFactory;
 import com.github.Gymify.security.service.UserService;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.GenericTypeResolver;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -45,9 +48,19 @@ public abstract class UserResourceService<T extends UserResource> implements Cru
             .ifPresent(this.userResourceRepository::delete);
     }
 
+    public T getOrThrowNotFound(Long id) {
+        return this.find(id)
+                .orElseThrow(() -> RuntimeExceptionWhileDataFetching.notFound(UserResource.class));
+    }
+
     public Optional<T> find(Specification<T> specification) {
         return this.userResourceRepository
                 .findOne(specification.and(this.currentUserSpecification()));
+    }
+
+    public List<T> findAll(Specification<T> specification) {
+        return this.userResourceRepository
+                .findAll(specification.and(this.currentUserSpecification()));
     }
 
     public List<T> getAllByCurrentUserId() {

@@ -15,11 +15,20 @@ import javax.persistence.InheritanceType;
 @NoArgsConstructor
 @Getter
 @Setter
-public class Set extends UserResource {
+public class Set extends UserResource implements DeepCopyEntity {
 
     @Column(name = "reps_quantity", nullable = false)
     private Integer repsQuantity;
 
     @Column(name = "planned_rest_duration", nullable = false)
     private Integer plannedRestDuration;
+
+    @Override
+    public Set deepCopy() {
+        Set set = new Set();
+        set.repsQuantity = this.repsQuantity;
+        set.plannedRestDuration = this.plannedRestDuration;
+        set.user = this.user;
+        return set;
+    }
 }

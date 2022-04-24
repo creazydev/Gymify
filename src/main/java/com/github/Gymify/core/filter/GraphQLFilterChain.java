@@ -13,6 +13,7 @@ public class GraphQLFilterChain extends GraphQLFilter {
     private final GraphQLFilterChain or;
     private final GraphQLFilterChain not;
 
+    @Builder
     public GraphQLFilterChain(String[] path, StringExpression stringExpression, LongExpression longExpression,
                               IntExpression intExpression, GraphQLFilterChain and, GraphQLFilterChain or,
                               GraphQLFilterChain not) {

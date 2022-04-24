@@ -12,6 +12,7 @@ import org.hibernate.annotations.TypeDef;
 import javax.persistence.*;
 import java.util.EnumSet;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
@@ -23,7 +24,7 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
-public class Exercise extends UserResource {
+public class Exercise extends UserResource implements DeepCopyEntity {
 
     @Column(name = "name", nullable = false)
     private String name;
@@ -47,4 +48,19 @@ public class Exercise extends UserResource {
 
     @Column(name = "planned_rest_duration")
     private Integer plannedRestDuration;
+
+    @Override
+    public Exercise deepCopy() {
+        Exercise exercise = new Exercise();
+        exercise.name = this.name;
+        exercise.bodyParts = this.bodyParts;
+        exercise.equipment = this.equipment;
+        exercise.plannedRestDuration = this.plannedRestDuration;
+        exercise.user = this.user;
+        exercise.sets = this.sets.stream()
+                .map(Set::deepCopy)
+                .collect(Collectors.toList());
+
+        return exercise;
+    }
 }

@@ -9,7 +9,9 @@ import com.github.Gymify.persistence.enums.UserAuthority;
 import com.github.Gymify.persistence.repository.UserRepository;
 import com.github.Gymify.persistence.repository.WorkoutPlanRepository;
 import com.github.Gymify.persistence.repository.WorkoutSessionRepository;
+import com.github.Gymify.user.resolver.AuthenticationResolver;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,6 +30,10 @@ public class Bootstrap {
     private final PasswordEncoder passwordEncoder;
     private final WorkoutSessionRepository workoutRepository;
     private final WorkoutPlanService workoutPlanService;
+    private final AuthenticationResolver authenticationResolver;
+
+    private final static String TEST_USER_EMAIL = "test@mail.ru";
+    private final static String TEST_USER_PASSWORD = "sample";
 
     @PostConstruct
     void init() {
@@ -38,8 +44,8 @@ public class Bootstrap {
     private void addSampleUsers() {
         Stream.of(
                 User.builder()
-                    .email("test@mail.ru")
-                    .password(passwordEncoder.encode("sample"))
+                    .email(TEST_USER_EMAIL)
+                    .password(passwordEncoder.encode(TEST_USER_PASSWORD))
                     .authorities(Set.of(UserAuthority.BASIC_USER))
                     .build()
             )
@@ -48,11 +54,12 @@ public class Bootstrap {
     }
 
     private void addSampleWorkoutPlans() {
-        User testUser = this.userRepository.findByEmail("test@mail.ru").orElseThrow(IllegalStateException::new);
+        User testUser = this.userRepository.findByEmail(TEST_USER_EMAIL).orElseThrow(IllegalStateException::new);
+
         Stream.of(
             WorkoutPlan.builder()
                 .name("Test active plan")
-                .active(true)
+                .active(false)
                 .workoutSessions(List.of())
                 .user(testUser)
                 .build(),
