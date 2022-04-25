@@ -13,16 +13,19 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
-public class ScheduledWorkoutSession extends WorkoutSession {
+public class ScheduledExercise extends Exercise {
 
     @Enumerated
     @Column(name = "workout_status", nullable = false)
     private WorkoutStatus workoutStatus;
 
-    @Column(name = "period", nullable = false)
-    private Period period;
+    @OneToMany(
+        orphanRemoval = true,
+        cascade = CascadeType.ALL
+    )
+    @JoinColumn(name = "scheduled_exercise_id", referencedColumnName = "id")
+    private List<ScheduledSet> scheduledSets;
 
-    @OneToMany
-    @JoinColumn(name = "scheduled_exercise_id", referencedColumnName = "id", nullable = false)
-    private List<ScheduledExercise> scheduledExercises;
+    @Column(name = "actual_rest_duration")
+    private Integer actualRestDuration;
 }

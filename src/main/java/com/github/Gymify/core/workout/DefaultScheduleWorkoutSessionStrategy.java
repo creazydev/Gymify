@@ -51,7 +51,7 @@ public class DefaultScheduleWorkoutSessionStrategy implements ScheduleWorkoutSes
                                             Period.localDateTimeToTimestamp(start.plus(sessionDeepCopy.getDuration()))
                                     )
                             );
-                            scheduledSession.setCompletedExercises(List.of());
+                            scheduledSession.setScheduledExercises(List.of());
                             return scheduledSession;
                         })
                         .collect(Collectors.toList()))

@@ -51,20 +51,6 @@ public class ScheduledWorkoutSessionAggregator {
                 ));
     }
 
-    public ScheduledWorkoutSession completeExercise(ScheduledWorkoutSession scheduledWorkoutSession) {
-        return Optional.ofNullable(scheduledWorkoutSession)
-                .filter(session -> Objects.equals(session.getWorkoutStatus(), ON_GOING))
-                .filter(session -> session.getCompletedExercises().size() == session.getExercises().size())
-                .stream()
-                .peek(session -> session.setWorkoutStatus(COMPLETED))
-                .map(scheduledWorkoutSessionService::update)
-                .findAny()
-                .orElseThrow(() -> new RuntimeExceptionWhileDataFetching(
-                        HttpStatus.BAD_REQUEST,
-                        "Could not complete scheduled workout session!"
-                ));
-    }
-
     public void cancelScheduled() {
         this.cancelAll(this.scheduledWorkoutSessionService.getSpecificationFactory().statusEquals(SCHEDULED));
     }

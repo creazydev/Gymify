@@ -1,11 +1,10 @@
 package com.github.Gymify.core.resolver;
 
 import com.github.Gymify.core.service.ExerciseService;
-import com.github.Gymify.core.service.OnGoingExerciseService;
+import com.github.Gymify.core.service.ScheduledExerciseService;
 import com.github.Gymify.core.workout.ScheduledExerciseAggregator;
-import com.github.Gymify.persistence.entity.CompletedExercise;
 import com.github.Gymify.persistence.entity.Exercise;
-import com.github.Gymify.persistence.entity.OnGoingExercise;
+import com.github.Gymify.persistence.entity.ScheduledExercise;
 import graphql.kickstart.tools.GraphQLMutationResolver;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -15,15 +14,15 @@ import org.springframework.stereotype.Component;
 public class ExerciseMutationResolver implements GraphQLMutationResolver {
     private final ScheduledExerciseAggregator scheduledExerciseAggregator;
     private final ExerciseService exerciseService;
-    private final OnGoingExerciseService onGoingExerciseService;
+    private final ScheduledExerciseService scheduledExerciseService;
 
-    public OnGoingExercise startExercise(Long exerciseId) {
-        Exercise exercise = this.exerciseService.getOrThrowNotFound(exerciseId);
+    public ScheduledExercise startScheduledExercise(Long scheduledExerciseId) {
+        Exercise exercise = this.exerciseService.getOrThrowNotFound(scheduledExerciseId);
         return this.scheduledExerciseAggregator.startExercise(exercise);
     }
 
-    public CompletedExercise completeExercise(Long onGoingExerciseId, Integer actualRestDuration) {
-        OnGoingExercise onGoingExercise = this.onGoingExerciseService.getOrThrowNotFound(onGoingExerciseId);
-        return this.scheduledExerciseAggregator.completeScheduledExercise(onGoingExercise, actualRestDuration);
+    public ScheduledExercise completeScheduledExercise(Long scheduledExerciseId, Integer actualRestDuration) {
+        ScheduledExercise scheduledExercise = this.scheduledExerciseService.getOrThrowNotFound(scheduledExerciseId);
+        return this.scheduledExerciseAggregator.completeScheduledExercise(scheduledExercise, actualRestDuration);
     }
 }
