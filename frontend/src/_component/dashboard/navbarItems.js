@@ -33,6 +33,14 @@ export const MainNavBarItemList = () => {
                         <ListItemText primary={t('workout_plans')}/>
                     </ListItemButton>
                 </Link>
+                <Link to="/workout-sessions">
+                    <ListItemButton>
+                        <ListItemIcon>
+                            <ShoppingCartIcon/>
+                        </ListItemIcon>
+                        <ListItemText primary={t('workout_sessions')}/>
+                    </ListItemButton>
+                </Link>
             </React.Fragment>
         </div>
     );

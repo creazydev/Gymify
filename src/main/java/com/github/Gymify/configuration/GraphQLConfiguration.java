@@ -24,6 +24,11 @@ public class GraphQLConfiguration {
     }
 
     @Bean
+    public GraphQLScalarType time() {
+        return ExtendedScalars.Time;
+    }
+
+    @Bean
     public GraphQLScalarType timestamp() {
         return new GraphQLScalarType.Builder()
             .name("Timestamp")

@@ -1,5 +1,6 @@
 scalar Long
 scalar Timestamp
+scalar Time
 
 type Query {
     currentUser: AuthenticatedUser
@@ -37,4 +38,8 @@ interface UserResource {
     modifiedByUserId: Int
     id: Int,
     user: User
+}
+
+enum DayOfWeek {
+    MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY
 }

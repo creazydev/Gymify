@@ -1,8 +1,14 @@
-type WorkoutSession {
-    creationTimestamp: Timestamp
-    updateTimestamp: Timestamp
-    id: ID
-    user: User
+type WorkoutSession implements UserResource {
+    creationTimestamp: Timestamp,
+    updateTimestamp: Timestamp,
+    createdByUserId: Int,
+    modifiedByUserId: Int
+    id: Int,
+    user: User,
+    dayOfWeek: DayOfWeek,
+    startTime: Time,
+    duration: Duration,
+    exercises: [Exercise]
 }
 
 type WorkoutPlan implements UserResource {

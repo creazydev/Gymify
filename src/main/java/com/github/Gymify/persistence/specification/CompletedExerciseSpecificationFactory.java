@@ -1,6 +1,8 @@
 package com.github.Gymify.persistence.specification;
 
-import com.github.Gymify.persistence.entity.Exercise;
+import com.github.Gymify.persistence.entity.CompletedExercise;
+import org.springframework.stereotype.Component;
 
-public class CompletedExerciseSpecificationFactory extends UserResourceSpecificationFactory<Exercise> {
+@Component
+public class CompletedExerciseSpecificationFactory extends UserResourceSpecificationFactory<CompletedExercise> {
 }
