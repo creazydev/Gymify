@@ -6,8 +6,10 @@ import com.github.Gymify.persistence.entity.WorkoutPlan;
 import graphql.kickstart.tools.GraphQLMutationResolver;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 @Component
+@Transactional
 @RequiredArgsConstructor
 public class WorkoutPlanMutationResolver implements GraphQLMutationResolver {
     private final WorkoutPlanService workoutPlanService;
@@ -20,8 +22,8 @@ public class WorkoutPlanMutationResolver implements GraphQLMutationResolver {
         return this.workoutPlanService.update(workoutPlan);
     }
 
-    public WorkoutPlan activateWorkoutPlan(Long id) {
-        return this.workoutPlanService.find(id)
+    public WorkoutPlan activateWorkoutPlan(Long workoutPlanId) {
+        return this.workoutPlanService.find(workoutPlanId)
                 .map(this.workoutPlanService::activate)
                 .orElseThrow(() -> RuntimeExceptionWhileDataFetching.notFound(WorkoutPlan.class));
     }

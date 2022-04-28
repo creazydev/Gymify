@@ -18,7 +18,7 @@ public class ScheduledWorkoutSessionService extends UserResourceService<Schedule
     }
 
     public List<ScheduledWorkoutSession> findAllScheduled() {
-        return this.findAll(getSpecificationFactory().statusEquals(WorkoutStatus.SCHEDULED));
+        return this.findAll(getSpecificationFactory().workoutStatusEquals(WorkoutStatus.SCHEDULED));
     }
 
     @Override

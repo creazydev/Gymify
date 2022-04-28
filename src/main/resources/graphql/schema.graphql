@@ -11,6 +11,8 @@ type Query {
 type Mutation {
     login(email: String!, password: String!): AuthenticatedUser
     register(email: String!, password: String!): AuthenticatedUser
+    addWorkoutPlan(workoutPlan: WorkoutPlan!): WorkoutPlan
+    activateWorkoutPlan(workoutPlanId: Int!): WorkoutPlan
 }
 
 input PageableRequest {

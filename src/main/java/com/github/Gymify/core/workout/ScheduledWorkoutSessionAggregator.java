@@ -52,7 +52,7 @@ public class ScheduledWorkoutSessionAggregator {
     }
 
     public void cancelScheduled() {
-        this.cancelAll(this.scheduledWorkoutSessionService.getSpecificationFactory().statusEquals(SCHEDULED));
+        this.cancelAll(this.scheduledWorkoutSessionService.getSpecificationFactory().workoutStatusEquals(SCHEDULED));
     }
 
     public void cancelAll(Specification<ScheduledWorkoutSession> specification) {

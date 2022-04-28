@@ -13,8 +13,8 @@ import javax.persistence.criteria.Join;
 @Component
 public class ScheduledWorkoutSessionSpecificationFactory extends UserResourceSpecificationFactory<ScheduledWorkoutSession> {
 
-    public Specification<ScheduledWorkoutSession> statusEquals(WorkoutStatus status) {
-        return (root, cq, cb) -> cb.equal(root.get("status"), status);
+    public Specification<ScheduledWorkoutSession> workoutStatusEquals(WorkoutStatus status) {
+        return (root, cq, cb) -> cb.equal(root.get("workoutStatus"), status);
     }
 
     public Specification<ScheduledWorkoutSession> exerciseIdIn(Long exerciseId) {

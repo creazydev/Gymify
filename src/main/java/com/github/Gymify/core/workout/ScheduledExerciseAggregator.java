@@ -26,7 +26,7 @@ public class ScheduledExerciseAggregator {
     public ScheduledExercise startExercise(Exercise exercise) {
         Specification<ScheduledWorkoutSession> specification = scheduledWorkoutSessionSpecificationFactory
                 .exerciseIdIn(exercise.getId())
-                .and(scheduledWorkoutSessionSpecificationFactory.statusEquals(WorkoutStatus.ON_GOING));
+                .and(scheduledWorkoutSessionSpecificationFactory.workoutStatusEquals(WorkoutStatus.ON_GOING));
 
         ScheduledWorkoutSession session = this.scheduledWorkoutSessionService.find(specification)
                 .orElseThrow(() -> RuntimeExceptionWhileDataFetching.notFound(ScheduledWorkoutSession.class));
