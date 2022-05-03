@@ -27,6 +27,7 @@ public class WorkoutPlanService extends UserResourceService<WorkoutPlan> impleme
     @Override
     @Transactional
     public WorkoutPlan add(WorkoutPlan workoutPlan) {
+        workoutPlan.setActive(false);
         this.validateEntity(workoutPlan);
         return super.add(workoutPlan);
     }

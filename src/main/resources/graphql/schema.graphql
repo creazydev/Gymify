@@ -11,7 +11,7 @@ type Query {
 type Mutation {
     login(email: String!, password: String!): AuthenticatedUser
     register(email: String!, password: String!): AuthenticatedUser
-    addWorkoutPlan(workoutPlan: WorkoutPlan!): WorkoutPlan
+    addWorkoutPlan(workoutPlan: WorkoutPlanInput!): WorkoutPlan
     activateWorkoutPlan(workoutPlanId: Int!): WorkoutPlan
 }
 

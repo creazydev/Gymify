@@ -1,5 +1,6 @@
 package com.github.Gymify.core.resolver;
 
+import com.github.Gymify.configuration.GLogger;
 import com.github.Gymify.core.service.WorkoutPlanService;
 import com.github.Gymify.persistence.entity.*;
 import com.github.Gymify.persistence.enums.UserAuthority;
@@ -8,6 +9,8 @@ import com.graphql.spring.boot.test.GraphQLTestTemplate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentMatchers;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -20,6 +23,7 @@ import java.time.Duration;
 import java.time.LocalTime;
 import java.util.List;
 
+import static net.bytebuddy.matcher.ElementMatchers.any;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.eq;
@@ -27,61 +31,65 @@ import static org.mockito.Mockito.doReturn;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-class WorkoutPlanMutationResolverTest {
-
-    @MockBean
-    WorkoutPlanService workoutPlanService;
+class WorkoutPlanMutationResolverTest implements GLogger {
 
     @Autowired
     private GraphQLTestTemplate graphQLTestTemplate;
 
-    private WorkoutPlan workoutPlan;
-    private WorkoutSession workoutSession;
-    private Exercise exercise;
-    private User user;
+    private static WorkoutPlan workoutPlan;
+    private static WorkoutSession workoutSession;
+    private static Exercise exercise;
+    private static User user;
 
     @BeforeEach
     void setUp() {
-        this.user = new User("test@gmail.com", "!password", List.of(UserAuthority.BASIC_USER));
+        user = new User("test@gmail.com", "!password", List.of(UserAuthority.BASIC_USER));
 
         Equipment equipment = new Equipment();
         equipment.setId(2L);
         equipment.setWeight(20L);
         equipment.setName("Basket");
-        equipment.setUser(this.user);
+        equipment.setUser(user);
 
-        this.exercise = new Exercise();
-        this.exercise.setId(1L);
-        this.exercise.setName("Bench press");
-        this.exercise.setUser(this.user);
-        this.exercise.setEquipment(equipment);
-        this.exercise.setPlannedRestDuration(240);
+        exercise = new Exercise();
+        exercise.setId(1L);
+        exercise.setName("Bench press");
+        exercise.setUser(user);
+        exercise.setEquipment(equipment);
+        exercise.setPlannedRestDuration(240);
 
-        this.workoutSession = new WorkoutSession();
-        this.workoutSession.setId(1L);
-        this.workoutSession.setUser(this.user);
-        this.workoutSession.setDayOfWeek(DayOfWeek.MONDAY);
-        this.workoutSession.setDuration(Duration.ZERO);
-        this.workoutSession.setStartTime(LocalTime.MIDNIGHT);
-        this.workoutSession.setExercises(List.of(this.exercise));
+        workoutSession = new WorkoutSession();
+        workoutSession.setId(1L);
+        workoutSession.setUser(user);
+        workoutSession.setDayOfWeek(DayOfWeek.MONDAY);
+        workoutSession.setDuration(Duration.ZERO);
+        workoutSession.setStartTime(LocalTime.MIDNIGHT);
+        workoutSession.setExercises(List.of(exercise));
 
-        this.workoutPlan = new WorkoutPlan();
-        this.workoutPlan.setId(1L);
-        this.workoutPlan.setUser(this.user);
-        this.workoutPlan.setWorkoutSessions(List.of(this.workoutSession));
-        this.workoutPlan.setActive(false);
-        this.workoutPlan.setName("FBW");
+        workoutPlan = new WorkoutPlan();
+//        workoutPlan.setId(1L);
+        workoutPlan.setUser(user);
+//        workoutPlan.setWorkoutSessions(List.of(workoutSession));
+        workoutPlan.setActive(false);
+        workoutPlan.setName("FBW");
     }
 
     @Test
     void addWorkoutPlan() throws IOException {
-        doReturn(workoutPlan).when(workoutPlanService).add(workoutPlan);
-        GraphQLResponse response = graphQLTestTemplate.postForResource("graphql/addWorkoutPlan.graphql");
+        GraphQLResponse response = this.graphQLTestTemplate
+                .postForResource("graphql/addWorkoutPlan.graphql");
+
         assertThat(response.isOk()).isTrue();
 
-        assertThat(response.get("$.addWorkoutPlan")).isEqualTo(this.workoutPlan);
+
+        debug(response.getRawResponse().getBody());
+        assertThat(response.get("$.data.addWorkoutPlan.id")).isEqualTo(workoutPlan.getId());
+        assertThat(response.get("$.data.addWorkoutPlan.creationTimestamp")).isEqualTo(workoutPlan.getCreationTimestamp());
+        assertThat(response.get("$.data.addWorkoutPlan.updateTimestamp")).isEqualTo(workoutPlan.getUpdateTimestamp());
+        assertThat(response.get("$.data.addWorkoutPlan.name")).isEqualTo(workoutPlan.getName());
+        assertThat(response.get("$.data.addWorkoutPlan.active")).isEqualTo(String.valueOf(workoutPlan.getActive()));
     }
-A
+
     @Test
     void updateWorkoutPlan() {
     }
