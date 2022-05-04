@@ -75,6 +75,9 @@ export default function SignIn() {
                             <Typography component="h1" variant="h4">
                                 {t(displaySignInForm ? "sign_in" : "sign_up")}
                             </Typography>
+                            <Typography component="h1" variant="h6">
+                                Welcome to Gymify App
+                            </Typography>
                             {displaySignInForm
                                 ? <SignInForm onClose={toggleDisplaySignInForm}/>
                                 : <SignUpForm onClose={toggleDisplaySignInForm}/>

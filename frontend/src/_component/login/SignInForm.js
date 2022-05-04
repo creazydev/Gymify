@@ -1,15 +1,16 @@
-import {Trans, useTranslation} from "react-i18next";
+import {useTranslation} from "react-i18next";
 import {gql, useMutation} from "@apollo/client";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Alert from "@mui/material/Alert";
 import Button from "@mui/material/Button";
-import Link from "@mui/material/Link";
 import * as React from "react";
 import { authAtom } from '../../_state';
 import {useSetRecoilState} from "recoil";
 import {Navigate} from "react-router-dom";
+import Typography from "@mui/material/Typography";
+import Link from "@mui/material/Link";
 
 const LOGIN_MUTATION = gql`
     mutation LoginMutation($email: String!$password: String!) {
@@ -21,8 +22,8 @@ const LOGIN_MUTATION = gql`
 `;
 
 export default function SignInForm({ onClose }) {
-    const { t, i18n } = useTranslation();
-    const [signIn, { data, loading, error, reset }] = useMutation(LOGIN_MUTATION);
+    const { t } = useTranslation();
+    const [signIn, { data, loading, error }] = useMutation(LOGIN_MUTATION);
     const setAuth = useSetRecoilState(authAtom);
 
     if (data) {
@@ -43,48 +44,70 @@ export default function SignInForm({ onClose }) {
                  }).then()
              }}
              noValidate sx={{mt: 1}}>
-            <TextField
-                margin="normal"
-                required
-                fullWidth
-                id="email"
-                label={t('email_address')}
-                name="email"
-                value={"test@mail.ru"}
-                autoComplete="email"
-                autoFocus
-            />
-            <TextField
-                margin="normal"
-                required
-                fullWidth
-                name="password"
-                label={t('password')}
-                type="password"
-                value={"sample"}
-                id="password"
-                autoComplete="current-password"
-            />
+                <TextField
+                    margin="normal"
+                    required
+                    fullWidth
+                    id="email"
+                    label={t('email_address')}
+                    name="email"
+                    defaultValue="test@mail.ru"
+                    autoComplete="email"
+                    autoFocus
+                    variant="standard"
+                    InputLabelProps={{ shrink: true }}
+                />
+                <TextField
+                    margin="normal"
+                    required
+                    fullWidth
+                    id="password"
+                    label={t('password')}
+                    name="password"
+                    type="password"
+                    defaultValue="sample"
+                    autoComplete="current-password"
+                    autoFocus
+                    variant="standard"
+                    InputLabelProps={{ shrink: true }}
+                />
             {error ? (<Alert severity="error">{error.message}</Alert>) : null}
             <Button
                 type="submit"
                 fullWidth
                 disabled={loading}
                 variant="contained"
-                sx={{mt: 3, mb: 2}}
+                sx={{mt: 3, mb: 2, bgcolor:'#F50057', fontWeight: 700,}}
             >
-                {t('sign_in')}
+                {t('SUBMIT')}
             </Button>
+
             <Grid container>
-                <Grid item xs>
-                    <Link href="#" variant="body2">
-                        {t('forget_password')}?
-                    </Link>
+                <Grid item md={12} lg={12} xs={12}>
+                        <Typography
+                            component='h1'
+                            variant="h6"
+                            sx={{
+                                display: 'flex',
+                                flexDirection: 'column',
+                                alignItems: 'center',
+                                marginBottom: 2,
+                            }}>
+                            <Link>
+                                FORGET PASSWORD?
+                            </Link>
+                        </Typography>
                 </Grid>
-                <Grid item>
-                    <Link href="#" variant="body2" onClick={onClose}>
+                <Grid item md={12} lg={12} xs={12}>
+                    <Button
+                        href=''
+                        variant="outlined"
+                        color="error"
+                        onClick={onClose}
+                        fullWidth
+                    >
                         {t('dont_have_an_account')}? {t('sign_up')}
-                    </Link>
+                    </Button>
                 </Grid>
             </Grid>
         </Box>
