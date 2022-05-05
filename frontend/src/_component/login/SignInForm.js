@@ -56,6 +56,17 @@ export default function SignInForm({ onClose }) {
                     autoFocus
                     variant="standard"
                     InputLabelProps={{ shrink: true }}
+                    sx={{
+                        label: {
+                            color: "rgba(255, 255, 255, 0.5)",
+                        },
+
+                        input: {
+                            color: "rgba(255, 255, 255, 0.5)",
+                        },
+
+                        '& .MuiInput-underline:before': { borderBottomColor: 'rgba(255, 255, 255, 0.5)' },
+                    }}
                 />
                 <TextField
                     margin="normal"
@@ -70,6 +81,17 @@ export default function SignInForm({ onClose }) {
                     autoFocus
                     variant="standard"
                     InputLabelProps={{ shrink: true }}
+                    sx={{
+                        label: {
+                            color: "rgba(255, 255, 255, 0.5)",
+                        },
+
+                        input: {
+                            color: "rgba(255, 255, 255, 0.5)",
+                        },
+
+                        '& .MuiInput-underline:before': { borderBottomColor: 'rgba(255, 255, 255, 0.5)' },
+                    }}
                 />
             {error ? (<Alert severity="error">{error.message}</Alert>) : null}
             <Button
