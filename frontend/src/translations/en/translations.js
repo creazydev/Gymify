@@ -3,6 +3,8 @@ export const TRANSLATIONS_EN = {
     sign_in: "Sign in",
     sign_up: "Sign up",
     register_new_account: "Register New Account",
+    sign_in_up_banner: "Weclome to the Gymify App",
+    second_title: "Personal workout planner",
     language: "Language",
     password: "Password",
     email_address: "Email Address",

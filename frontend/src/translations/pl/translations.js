@@ -3,6 +3,8 @@ export const TRANSLATIONS_PL = {
     sign_in: "Zaloguj się",
     sign_up: "Zarejestruj się",
     register_new_account: "Zarejestruj Nowe Konto",
+    sign_in_up_banner: "Witamy w aplikacji Gymify",
+    second_title: "Twój personalny planer treningowy",
     language: "Język",
     password: "Hasło",
     email_address: "Adres email",
