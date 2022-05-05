@@ -18,8 +18,8 @@ const REGISTER_MUTATION = gql`
 `;
 
 export default function SignUpForm({ onClose }) {
-    const { t, i18n } = useTranslation();
-    const [signUp, { data, loading, error, reset }] = useMutation(REGISTER_MUTATION);
+    const { t } = useTranslation();
+    const [signUp, { data, loading, error }] = useMutation(REGISTER_MUTATION);
 
     if (data) {
         return data.login.email;
@@ -38,6 +38,7 @@ export default function SignUpForm({ onClose }) {
                  }).then()
              }}
              noValidate sx={{mt: 1}}>
+
             <TextField
                 margin="normal"
                 required
@@ -47,16 +48,41 @@ export default function SignUpForm({ onClose }) {
                 name="email"
                 autoComplete="email"
                 autoFocus
+                variant="standard"
+                sx={{
+                    label: {
+                        color: "rgba(255, 255, 255, 0.5)",
+                    },
+
+                    input: {
+                        color: "rgba(255, 255, 255, 0.5)",
+                    },
+
+                    '& .MuiInput-underline:before': { borderBottomColor: 'rgba(255, 255, 255, 0.5)' },
+                }}
             />
+
             <TextField
                 margin="normal"
                 required
                 fullWidth
-                name="password"
+                id="password"
                 label={t('password')}
                 type="password"
-                id="password"
                 autoComplete="current-password"
+                autoFocus
+                variant="standard"
+                sx={{
+                    label: {
+                        color: "rgba(255, 255, 255, 0.5)",
+                    },
+
+                    input: {
+                        color: "rgba(255, 255, 255, 0.5)",
+                    },
+
+                    '& .MuiInput-underline:before': { borderBottomColor: 'rgba(255, 255, 255, 0.5)' },
+                }}
             />
             {error ? (<Alert severity="error">{error.message}</Alert>) : null}
             <Button
@@ -64,14 +90,22 @@ export default function SignUpForm({ onClose }) {
                 fullWidth
                 disabled={loading}
                 variant="contained"
-                sx={{mt: 3, mb: 2}}
+                sx={{mt: 3, mb: 2, bgcolor:'#F50057', fontWeight: 700,}}
             >
                 {t('sign_up')}
             </Button>
             <Grid container>
                 <Grid item xs>
                     <Link href="#" variant="body2" onClick={onClose}>
-                        {t('already_have_account')}? {t('sign_in')}
+                        <Button
+                            href=''
+                            variant="outlined"
+                            color="error"
+                            onClick={onClose}
+                            fullWidth
+                        >
+                            {t('already_have_account')}? {t('sign_in')}
+                        </Button>
                     </Link>
                 </Grid>
             </Grid>
