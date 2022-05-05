@@ -63,7 +63,7 @@ export default function SignIn() {
                                 Gymify
                             </Typography>
                             <Typography component='h1' variant="h3" sx={{my: 4, mx: 12,}} className={classes.typography}>
-                                Personal workout planner
+                                {t('second_title')}
                             </Typography>
                         </Grid>
                     </Hidden>
@@ -76,7 +76,7 @@ export default function SignIn() {
                                 {t(displaySignInForm ? "sign_in" : "sign_up")}
                             </Typography>
                             <Typography component="h1" variant="h6">
-                                Welcome to Gymify App
+                                {t('sign_in_up_banner')}
                             </Typography>
                             {displaySignInForm
                                 ? <SignInForm onClose={toggleDisplaySignInForm}/>
