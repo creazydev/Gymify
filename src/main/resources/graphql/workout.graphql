@@ -1,0 +1,45 @@
+input WorkoutPlanInput {
+    id: Int,
+    name: String
+}
+
+type WorkoutSession implements UserResource {
+    creationTimestamp: Timestamp,
+    updateTimestamp: Timestamp,
+    createdByUserId: Int,
+    modifiedByUserId: Int
+    id: Int,
+    user: User,
+    dayOfWeek: DayOfWeek,
+    startTime: Time,
+    duration: Duration,
+    exercises: [Exercise]
+}
+
+type WorkoutPlan implements UserResource {
+    creationTimestamp: Timestamp,
+    updateTimestamp: Timestamp,
+    createdByUserId: Int,
+    modifiedByUserId: Int
+    id: Int,
+    user: User,
+    name: String,
+    workoutSessions: [WorkoutSession]
+    active: Boolean,
+}
+
+type WorkoutSessionPage {
+    content: [WorkoutSession]
+    totalElements: Int
+    totalPages: Int
+    number: Int
+    size: Int
+}
+
+type WorkoutPlanPage {
+    content: [WorkoutPlan]
+    totalElements: Int
+    totalPages: Int
+    number: Int
+    size: Int
+}

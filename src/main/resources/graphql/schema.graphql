@@ -1,0 +1,47 @@
+scalar Long
+scalar Timestamp
+scalar Time
+
+type Query {
+    currentUser: AuthenticatedUser
+    currentUserWorkoutSessions(pageableRequest: PageableRequest!, filter: Filter!): WorkoutSessionPage
+    currentUserWorkoutPlans(pageableRequest: PageableRequest!, filter: Filter!): WorkoutPlanPage
+}
+
+type Mutation {
+    login(email: String!, password: String!): AuthenticatedUser
+    register(email: String!, password: String!): AuthenticatedUser
+    addWorkoutPlan(workoutPlan: WorkoutPlanInput!): WorkoutPlan
+    activateWorkoutPlan(workoutPlanId: Int!): WorkoutPlan
+}
+
+input PageableRequest {
+    page: Int
+    pageSize: Int
+    direction: Direction
+    sort: String
+}
+
+enum Direction {
+    ASC, DESC
+}
+
+interface AuditedEntity {
+    creationTimestamp: Timestamp,
+    updateTimestamp: Timestamp,
+    createdByUserId: Int,
+    modifiedByUserId: Int
+}
+
+interface UserResource {
+    creationTimestamp: Timestamp,
+    updateTimestamp: Timestamp,
+    createdByUserId: Int,
+    modifiedByUserId: Int
+    id: Int,
+    user: User
+}
+
+enum DayOfWeek {
+    MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY
+}

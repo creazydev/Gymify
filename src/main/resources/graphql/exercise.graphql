@@ -1,0 +1,8 @@
+type Exercise implements UserResource {
+    creationTimestamp: Timestamp,
+    updateTimestamp: Timestamp,
+    createdByUserId: Int,
+    modifiedByUserId: Int
+    id: Int,
+    user: User,
+}

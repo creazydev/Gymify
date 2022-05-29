@@ -5,12 +5,13 @@ services:
     container_name: 'postgres-container'
     hostname: 'localhost'
     ports:
-      - "5432:5432"
+      - "5433:5433"
     volumes:
       - data:/var/lib/gymify/data
     environment:
       - POSTGRES_USER=gymify
       - POSTGRES_PASSWORD=aifae4UH>aiquie
       - POSTGRES_DB=gymify
+    command: -p 5433
 volumes:
   data:

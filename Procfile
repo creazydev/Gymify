@@ -1,1 +1,1 @@
-web: java $JAVA_TOOL_OPTIONS -jar target/gymify-0.0.1-SNAPSHOT.jar --spring.profiles.active=heroku
+web: java $JAVA_OPTS -Dserver.port=$PORT -jar target/*.jar -Dspring.profiles.active=prod
