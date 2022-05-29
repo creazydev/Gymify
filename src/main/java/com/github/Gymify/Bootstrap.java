@@ -37,8 +37,10 @@ public class Bootstrap {
 
     @PostConstruct
     void init() {
-        this.addSampleUsers();
-        this.addSampleWorkoutPlans();
+        if (this.userRepository.findByEmail(TEST_USER_EMAIL).isEmpty()) {
+            this.addSampleUsers();
+            this.addSampleWorkoutPlans();
+        }
     }
 
     private void addSampleUsers() {
