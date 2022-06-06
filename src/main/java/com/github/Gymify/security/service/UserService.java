@@ -30,11 +30,15 @@ public class UserService implements UserDetailsService {
             .orElseThrow(() -> new UsernameNotFoundException(username));
     }
 
+    public Optional<UserDetails> findUserByToken(String token) {
+        return this.jwtService
+            .getDecodedToken(token)
+            .map(DecodedJWT::getSubject)
+            .map(this::loadUserByUsername);
+    }
+
     public UserDetails loadUserByToken(String token) {
-        return jwtService.getDecodedToken(token)
-                .map(DecodedJWT::getSubject)
-                .map(this::loadUserByUsername)
-                .orElseThrow(() -> RuntimeExceptionWhileDataFetching.notFound(User.class));
+        return this.findUserByToken(token).orElseThrow(() -> RuntimeExceptionWhileDataFetching.notFound(User.class));
     }
 
     public Optional<User> findCurrentUser() {
