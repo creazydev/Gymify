@@ -13,6 +13,8 @@ import WorkoutPlanForm from "./_component/dashboard/workout-plans/WorkoutPlanFor
 import ProfileForm from "./_component/dashboard/settings/ProfileForm";
 import WorkoutSessions from "./_component/dashboard/workout-sessions/WorkoutSessions";
 import WorkoutSessionForm from "./_component/dashboard/workout-sessions/WorkoutSessionForm";
+import WorkoutAdd from "./_component/dashboard/workout-add/WorkoutAdd";
+import LiveWorkout from "./_component/dashboard/live-workout/LiveWorkout";
 
 
 const App = () => {
@@ -23,13 +25,12 @@ const App = () => {
                     <Route element={<PrivateRoute/>}>
                         <Route element={<Dashboard/>}>
                             <Route path='/' element={<Home/>}/>
-
+                            <Route path='/workout-add' element={<WorkoutAdd/>}/>
+                            <Route path='/live-workout' element={<LiveWorkout/>}/>
                             <Route path='workout-plans' element={<WorkoutPlans/>}/>
                             <Route path='workout-plans/:id' element={<WorkoutPlanForm/>}/>
-
                             <Route path='workout-sessions' element={<WorkoutSessions/>}/>
                             <Route path='workout-sessions/:id' element={<WorkoutSessionForm/>}/>
-
                             <Route path='settings' element={<Settings/>}/>
                         </Route>
                     </Route>

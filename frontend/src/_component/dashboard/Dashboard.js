@@ -7,13 +7,10 @@ import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import List from '@mui/material/List';
 import Typography from '@mui/material/Typography';
-import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
-import Badge from '@mui/material/Badge';
 import Container from '@mui/material/Container';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import NotificationsIcon from '@mui/icons-material/Notifications';
 import {
     MainNavBarItemList,
     SettingsAndToolsNavBarItemList
@@ -21,6 +18,7 @@ import {
 import {Logout} from "@mui/icons-material";
 import {useUserActions} from '../../_action';
 import {Outlet} from "react-router";
+import Button from "@mui/material/Button";
 
 const drawerWidth = 240;
 
@@ -80,7 +78,7 @@ function DashboardContent() {
         <ThemeProvider theme={mdTheme}>
             <Box sx={{display: 'flex'}}>
                 <CssBaseline/>
-                <AppBar position="absolute" open={open}>
+                <MainAppBar position="absolute" open={open}>
                     <Toolbar
                         sx={{
                             pr: '24px', // keep right padding when drawer closed
@@ -98,66 +96,117 @@ function DashboardContent() {
                         >
                             <MenuIcon/>
                         </IconButton>
-                        <Typography
-                            component="h1"
-                            variant="h6"
-                            color="inherit"
-                            noWrap
-                            sx={{flexGrow: 1}}
-                        >
+                        <GymifyTitleFirst component="h1" variant="h5">
+                            Gymify
+                        </GymifyTitleFirst>
+                        <GymifyTitleSecond component="h1" variant="h5">
                             Dashboard
-                        </Typography>
-                        <IconButton color="inherit">
-                            <Badge badgeContent={4} color="secondary">
-                                <NotificationsIcon/>
-                            </Badge>
-                        </IconButton>
-                        <IconButton color="inherit" onClick={useUserActions().logout}>
-                            <Logout/>
-                        </IconButton>
+                        </GymifyTitleSecond>
                     </Toolbar>
-                </AppBar>
-                <Drawer variant="permanent" open={open}>
-                    <Toolbar
-                        sx={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'flex-end',
-                            px: [1],
-                        }}
-                    >
+                </MainAppBar>
+                <MainDrawer variant="permanent" open={open}>
+                    <MainToolbar>
                         <IconButton onClick={toggleDrawer}>
-                            <ChevronLeftIcon/>
+                            <MinDrawer/>
                         </IconButton>
-                    </Toolbar>
-                    <Divider/>
-                    <List component="nav">
-                        <MainNavBarItemList/>
-                        <Divider sx={{my: 1}}/>
-                        <SettingsAndToolsNavBarItemList/>
-                    </List>
-                </Drawer>
-                <Box
-                    component="main"
-                    sx={{
-                        backgroundColor: (theme) =>
-                            theme.palette.mode === 'light'
-                                ? theme.palette.grey[100]
-                                : theme.palette.grey[900],
-                        flexGrow: 1,
-                        height: '100vh',
-                        overflow: 'auto',
-                    }}
-                >
+                    </MainToolbar>
+                    <NavList component="nav">
+                        <MainNavBarItemList open={open}/>
+                        <SettingsAndToolsNavBarItemList />
+                    </NavList>
+                    <LogoutBox>
+                        <LogoutButton
+                            variant="outlined"
+                            color="error"
+                            onClick={useUserActions().logout}
+                            sx={{
+                                ...(!open && {display: 'none'})
+                            }}
+                        >
+                            LOGOUT
+                        </LogoutButton>
+                    </LogoutBox>
+                    <IconButton onClick={useUserActions().logout} sx={{ ...(open && {display: 'none'}) }}>
+                        <LogoutIcon/>
+                    </IconButton>
+                </MainDrawer>
+
+                <MainBox component="main">
                     <Toolbar/>
                     <Container sx={{m: 0, mt: 2, p: 0}} maxWidth={false}>
                         <Outlet />
                     </Container>
-                </Box>
+                </MainBox>
             </Box>
         </ThemeProvider>
     );
 }
+
+const LogoutIcon = styled(Logout, {})`
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    margin-bottom: 30%;
+`
+
+const LogoutButton = styled(Button, {})`
+    width: 80%;
+`
+
+const LogoutBox = styled(Box, {})`
+    height: 100%;
+    margin-bottom: 15%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+`
+
+const MinDrawer = styled(ChevronLeftIcon, {})`
+    color: white;
+`
+
+const MainAppBar = styled(AppBar, {})`
+    background-color: #424242;
+    box-shadow: none;
+`
+
+const GymifyTitleFirst = styled(Typography, {})`
+    flexGrow: 1;
+`
+
+const GymifyTitleSecond = styled(Typography, {})`
+    flexGrow: 1;
+    color: #C23030;
+    margin-left: 5px;
+`
+
+const NavList = styled(List, {})`
+    background-color: #424242;
+`
+
+const MainDrawer = styled(Drawer, {})`  
+    .MuiPaper-root {
+        background-color: #424242;
+        border: none;
+        box-shadow: none;
+    }
+`
+
+const MainToolbar = styled(Toolbar, {})`
+    background-color: #424242;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    px: 1;
+`;
+
+const MainBox = styled(Box, {})`
+    background-color: #777777;
+    flex-grow: 1;
+    height: 100vh;
+    overflow: auto;
+`;
 
 export default function Dashboard() {
     return <DashboardContent/>;

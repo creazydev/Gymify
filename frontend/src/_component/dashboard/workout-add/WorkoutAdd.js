@@ -1,14 +1,14 @@
 import React from "react";
 import {useTranslation} from "react-i18next";
 
-const WorkoutPlanForm = () => {
+const WorkoutAdd = () => {
     const { t, i18n } = useTranslation();
 
     return (
         <div>
-            working
+            <h1>TODO</h1>
         </div>
-    );
-}
+    )
+};
 
-export default WorkoutPlanForm;
+export default WorkoutAdd;
