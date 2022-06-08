@@ -15,28 +15,27 @@ class PasswordValidatorTest {
         .collect(Collectors.joining());
 
     @Test
-    void shouldPassWhenMeetConditions() {
+    void test_valid_pass() {
         assertTrue(passwordValidator.test("test1234"));
-        assertTrue(passwordValidator.test(str.substring(0, 255)));
     }
 
     @Test
-    void shouldFailWhenNull() {
+    void test_null_failed() {
         assertFalse(passwordValidator.test(null));
     }
 
     @Test
-    void shouldFailWhenBlank() {
+    void test_blank_failed() {
         assertFalse(passwordValidator.test(""));
     }
 
     @Test
-    void shouldFailWhenTooShort() {
+    void test_7CharsTooShort_failed() {
         assertFalse(passwordValidator.test("aaaaaaa"));
     }
 
     @Test
-    void shouldFailWhenTooLong() {
+    void test_256CharsTooLong_failed() {
         assertFalse(passwordValidator.test(str.substring(0, 256)));
     }
 }
