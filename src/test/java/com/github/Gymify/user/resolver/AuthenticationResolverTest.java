@@ -4,10 +4,8 @@ import com.github.Gymify.persistence.entity.User;
 import com.github.Gymify.persistence.enums.UserAuthority;
 import com.github.Gymify.security.service.JwtService;
 import com.github.Gymify.security.service.UserService;
-import com.github.Gymify.user.model.AuthenticatedUser;
 import com.graphql.spring.boot.test.GraphQLResponse;
 import com.graphql.spring.boot.test.GraphQLTestTemplate;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -15,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -23,6 +22,7 @@ import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.doThrow;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -32,33 +32,46 @@ class AuthenticationResolverTest {
     private GraphQLTestTemplate graphQLTestTemplate;
 
     @MockBean
-    AuthenticationProvider authenticationProvider;
+    private AuthenticationProvider authenticationProvider;
 
     @MockBean
-    UserService userService;
+    private UserService userService;
 
     @MockBean
-    JwtService jwtService;
+    private JwtService jwtService;
 
-    private static User user;
-    private static UsernamePasswordAuthenticationToken authentication;
-    private static String jwtToken;
+    private User user;
+    private UsernamePasswordAuthenticationToken authentication;
+    private String jwtToken;
 
     @BeforeEach
     void setUp() {
-        jwtToken = "JWTTOKEN";
-        user = new User("email@test.com", "XXX", List.of(UserAuthority.BASIC_USER));
-        authentication = new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword());
+        this.jwtToken = "JWTTOKEN";
+        this.user = new User("email@test.com", "XXX", List.of(UserAuthority.BASIC_USER));
+        this.authentication = new UsernamePasswordAuthenticationToken(this.user.getUsername(), this.user.getPassword());
     }
 
     @Test
-    void login() throws IOException {
-        doReturn(authentication).when(authenticationProvider).authenticate(authentication);
-        doReturn(user).when(userService).getCurrentUser();
-        doReturn(jwtToken).when(jwtService).getToken(user);
-        GraphQLResponse response = graphQLTestTemplate.postForResource("graphql/login.graphql");
+    void login_validCredentials_returnAuthenticatedUser() throws IOException {
+        doReturn(this.authentication).when(this.authenticationProvider).authenticate(this.authentication);
+        doReturn(this.user).when(this.userService).getCurrentUser();
+        doReturn(this.jwtToken).when(this.jwtService).getToken(this.user);
+
+        GraphQLResponse response = this.graphQLTestTemplate.postForResource("graphql/login.graphql");
+
         assertThat(response.isOk()).isTrue();
         assertThat(response.get("$.data.login.email")).isNotNull();
-        assertThat(response.get("$.data.login.authenticationToken")).isEqualTo(jwtToken);
+        assertThat(response.get("$.data.login.authenticationToken")).isEqualTo(this.jwtToken);
+    }
+
+    @Test
+    void login_blankPassword_returnErrorMessage() throws IOException {
+        doThrow(new BadCredentialsException("")).when(this.authenticationProvider).authenticate(
+            new UsernamePasswordAuthenticationToken("email@test.com", ""));
+
+        GraphQLResponse response = this.graphQLTestTemplate.postForResource("graphql/login_blankPassword.graphql");
+
+        assertThat(response.isOk()).isTrue();
+        assertThat(response.get("$.errors[0].message")).contains("400 BAD_REQUEST");
     }
 }
