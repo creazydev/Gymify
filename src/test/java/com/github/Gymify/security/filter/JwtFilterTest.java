@@ -25,6 +25,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.Mockito.doReturn;
@@ -37,25 +38,50 @@ class JwtFilterTest {
     private HttpServletRequest httpServletRequest;
 
     @MockBean
-    UserService userService;
+    private UserService userService;
 
-    private static User user;
-    private static String jwtToken;
+    private User user;
+    private String jwtToken;
 
     @BeforeEach
     void setUp() {
-        jwtFilter = new JwtFilter(userService);
-        jwtToken = "JWTTOKEN";
-        user = new User("email@test.com", "XXX", List.of(UserAuthority.BASIC_USER));
-        httpServletRequest = Mockito.mock(HttpServletRequest.class);
+        this.jwtFilter = new JwtFilter(userService);
+        this.jwtToken = "JWTTOKEN";
+        this.user = new User("email@test.com", "XXX", List.of(UserAuthority.BASIC_USER));
+        this.httpServletRequest = Mockito.mock(HttpServletRequest.class);
     }
 
     @Test
-    void doFilterInternal() throws ServletException, IOException {
-        doReturn(user).when(userService).loadUserByToken(jwtToken);
-        doReturn("Bearer " + jwtToken).when(httpServletRequest).getHeader("Authorization");
+    void doFilterInternal_validJwt_contextAuthenticationNotNull() throws ServletException, IOException {
+        doReturn(Optional.of(this.user)).when(this.userService).findUserByToken(this.jwtToken);
+        doReturn("Bearer " + this.jwtToken).when(this.httpServletRequest).getHeader("Authorization");
 
-        jwtFilter.doFilterInternal(httpServletRequest, Mockito.mock(HttpServletResponse.class), new MockFilterChain());
+        this.jwtFilter.doFilterInternal(this.httpServletRequest, Mockito.mock(HttpServletResponse.class), new MockFilterChain());
         assertThat(SecurityContextHolder.getContext().getAuthentication()).isNotNull();
+    }
+
+    @Test
+    void doFilterInternal_authenticationHeaderNull_contextAuthenticationNull() throws ServletException, IOException {
+        doReturn(null).when(this.httpServletRequest).getHeader("Authorization");
+
+        this.jwtFilter.doFilterInternal(this.httpServletRequest, Mockito.mock(HttpServletResponse.class), new MockFilterChain());
+        assertThat(SecurityContextHolder.getContext().getAuthentication()).isNull();
+    }
+
+    @Test
+    void doFilterInternal_invalidJwt_contextAuthenticationNull() throws ServletException, IOException {
+        doReturn("Bearer " + "INVALID").when(this.httpServletRequest).getHeader("Authorization");
+
+        this.jwtFilter.doFilterInternal(this.httpServletRequest, Mockito.mock(HttpServletResponse.class), new MockFilterChain());
+        assertThat(SecurityContextHolder.getContext().getAuthentication()).isNull();
+    }
+
+    @Test
+    void doFilterInternal_notFoundUser_contextAuthenticationNull() throws ServletException, IOException {
+        doReturn(Optional.empty()).when(this.userService).findUserByToken(this.jwtToken);
+        doReturn("Bearer " + this.jwtToken).when(this.httpServletRequest).getHeader("Authorization");
+
+        this.jwtFilter.doFilterInternal(this.httpServletRequest, Mockito.mock(HttpServletResponse.class), new MockFilterChain());
+        assertThat(SecurityContextHolder.getContext().getAuthentication()).isNull();
     }
 }
