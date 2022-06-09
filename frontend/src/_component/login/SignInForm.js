@@ -49,7 +49,6 @@ export default function SignInForm({ onClose }) {
                     id="email"
                     label={t('email_address')}
                     name="email"
-                    defaultValue="test@mail.ru"
                     autoComplete="email"
                     autoFocus
                     variant="standard"
@@ -74,7 +73,6 @@ export default function SignInForm({ onClose }) {
                     label={t('password')}
                     name="password"
                     type="password"
-                    defaultValue="sample"
                     autoComplete="current-password"
                     autoFocus
                     variant="standard"
