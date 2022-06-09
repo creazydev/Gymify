@@ -8,11 +8,11 @@ const httpLink = createHttpLink({
 });
 
 const authLink = setContext((_, { headers }) => {
-    const token = getRecoil(authAtom);
+    const auth = getRecoil(authAtom);
     return {
         headers: {
             ...headers,
-            authorization: token ? `Bearer ${token}` : "",
+            authorization: auth ? `Bearer ${auth.authenticationToken}` : "",
         }
     }
 });

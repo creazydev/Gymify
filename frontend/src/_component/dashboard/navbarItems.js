@@ -15,13 +15,18 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import BuildCircleOutlinedIcon from '@mui/icons-material/BuildCircleOutlined';
 
+import {authAtom} from '../../_state';
+import {useRecoilValue} from "recoil";
+
 export const MainNavBarItemList = (props) => {
     const { t, i18n } = useTranslation();
+    const auth = useRecoilValue(authAtom);
+
     return (
         <div>
             <AvatarBox>
                 <AvatarPlaceholder sx={{...(!props.open && {display: 'none'})}}>M</AvatarPlaceholder>
-                <Username sx={{...(!props.open && {display: 'none'})}}>placeholder@gmail.com</Username>
+                <Username id={'userEmail'} sx={{...(!props.open && {display: 'none'})}}>{auth.email}</Username>
             </AvatarBox>
             <React.Fragment>
                 <Divider variant='middle'/>

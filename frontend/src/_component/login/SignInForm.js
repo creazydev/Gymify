@@ -25,7 +25,7 @@ export default function SignInForm({ onClose }) {
     const setAuth = useSetRecoilState(authAtom);
 
     if (data) {
-        setAuth(data.login.authenticationToken);
+        setAuth(data.login);
         return <Navigate to="/" />;
     }
 

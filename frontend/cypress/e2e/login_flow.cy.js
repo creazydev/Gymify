@@ -16,5 +16,6 @@ describe('The Login Page', () => {
         cy.get('button[type=submit]').click()
 
         cy.url().should('include', '/')
+        cy.get('p[id=userEmail]').should('contain', user.email)
     })
 })
