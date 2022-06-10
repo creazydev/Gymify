@@ -102,6 +102,7 @@ export default function SignInForm({ onClose }) {
             <Grid container>
                 <Grid item md={12} lg={12} xs={12}>
                     <Button
+                        id="toggle_sign_up"
                         href=''
                         variant="outlined"
                         color="error"

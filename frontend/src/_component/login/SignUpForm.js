@@ -7,6 +7,7 @@ import Alert from "@mui/material/Alert";
 import Button from "@mui/material/Button";
 import Link from "@mui/material/Link";
 import * as React from "react";
+import {Navigate} from "react-router-dom";
 
 const REGISTER_MUTATION = gql`
     mutation RegisterMutation($email: String!$password: String!) {
@@ -22,7 +23,7 @@ export default function SignUpForm({ onClose }) {
     const [signUp, { data, loading, error }] = useMutation(REGISTER_MUTATION);
 
     if (data) {
-        return data.login.email;
+        return <Navigate to="/" />;
     }
 
     return (
@@ -68,6 +69,7 @@ export default function SignUpForm({ onClose }) {
                 fullWidth
                 id="password"
                 label={t('password')}
+                name="password"
                 type="password"
                 autoComplete="current-password"
                 autoFocus
