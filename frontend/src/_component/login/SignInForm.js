@@ -25,7 +25,7 @@ export default function SignInForm({ onClose }) {
     const setAuth = useSetRecoilState(authAtom);
 
     if (data) {
-        setAuth(data.login.authenticationToken);
+        setAuth(data.login);
         return <Navigate to="/" />;
     }
 
@@ -49,7 +49,6 @@ export default function SignInForm({ onClose }) {
                     id="email"
                     label={t('email_address')}
                     name="email"
-                    defaultValue="test@mail.ru"
                     autoComplete="email"
                     autoFocus
                     variant="standard"
@@ -74,7 +73,6 @@ export default function SignInForm({ onClose }) {
                     label={t('password')}
                     name="password"
                     type="password"
-                    defaultValue="sample"
                     autoComplete="current-password"
                     autoFocus
                     variant="standard"
@@ -104,6 +102,7 @@ export default function SignInForm({ onClose }) {
             <Grid container>
                 <Grid item md={12} lg={12} xs={12}>
                     <Button
+                        id="toggle_sign_up"
                         href=''
                         variant="outlined"
                         color="error"
