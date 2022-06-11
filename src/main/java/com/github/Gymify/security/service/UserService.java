@@ -18,7 +18,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-@Transactional(readOnly = true)
+@Transactional
 public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
     private final JwtService jwtService;
