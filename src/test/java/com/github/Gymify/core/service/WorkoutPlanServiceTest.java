@@ -164,6 +164,7 @@ class WorkoutPlanServiceTest {
         doReturn(Optional.of(persistedWorkoutPlan)).when(this.workoutPlanRepository).findOne((Specification<WorkoutPlan>) any());
 
         Assertions.assertThrows(RuntimeException.class, () -> this.workoutPlanService.validateEntity(workoutPlan));
+
         verify(this.workoutPlanRepository, times(1)).findOne((Specification<WorkoutPlan>) any());
     }
 
