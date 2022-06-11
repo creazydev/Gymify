@@ -13,8 +13,10 @@ import org.springframework.core.GenericTypeResolver;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -32,12 +34,21 @@ public abstract class UserResourceService<T extends UserResource> implements Cru
     }
 
     @Override
+    @Transactional
     public T add(T obj) {
+        if (Objects.isNull(obj.getUser())) {
+            obj.setUser(this.userService.getCurrentUser());
+        }
+
         return this.userResourceRepository.save(obj);
     }
 
     @Override
     public T update(T obj) {
+        if (Objects.isNull(obj.getUser())) {
+            obj.setUser(this.userService.getCurrentUser());
+        }
+
         return this.userResourceRepository.save(obj);
     }
 
@@ -76,6 +87,6 @@ public abstract class UserResourceService<T extends UserResource> implements Cru
     }
 
     protected Specification<T> currentUserSpecification() {
-        return this.specificationFactory.userIdEquals(userService.getCurrentUser().getId());
+        return this.specificationFactory.userIdEquals(this.userService.getCurrentUser().getId());
     }
 }

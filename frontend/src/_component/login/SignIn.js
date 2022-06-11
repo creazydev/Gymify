@@ -59,24 +59,36 @@ export default function SignIn() {
                 <Grid container component="main" sx={{height: '100vh'}}>
                     <Hidden mdDown>
                         <Grid item xs={false} sm={4} md={7} className={classes.leftGrid}>
-                            <Typography component='h1' variant="h1" sx={{my: 6, mx: 12,}} className={classes.typography}>
+                            <Typography
+                                component='h1'
+                                variant="h1"
+                                sx={{my: 6, mx: 12,}}
+                                className={classes.typography}
+                                data-testid="gymify-title"
+                            >
                                 Gymify
                             </Typography>
-                            <Typography component='h1' variant="h3" sx={{my: 4, mx: 12,}} className={classes.typography}>
-                                Personal workout planner
+                            <Typography
+                                component='h1'
+                                variant="h3"
+                                sx={{my: 4, mx: 12,}}
+                                className={classes.typography}
+                                data-testid="gymify-second-title"
+                            >
+                                {t('second_title')}
                             </Typography>
                         </Grid>
                     </Hidden>
                     <Grid item xs={12} sm={12} md={5} className={classes.dark}>
                         <Box sx={{ my:8, mx:4,}} className={classes.box}>
                             <Avatar sx={{m: 1, bgcolor: 'secondary.main'}}>
-                                <LockOutlinedIcon/>
+                                <LockOutlinedIcon data-testid="lock-icon" />
                             </Avatar>
-                            <Typography component="h1" variant="h4">
+                            <Typography component="h1" variant="h4" data-testid="sign-in-up">
                                 {t(displaySignInForm ? "sign_in" : "sign_up")}
                             </Typography>
-                            <Typography component="h1" variant="h6">
-                                Welcome to Gymify App
+                            <Typography component="h1" variant="h6" data-testid="welcome-message">
+                                {t('sign_in_up_banner')}
                             </Typography>
                             {displaySignInForm
                                 ? <SignInForm onClose={toggleDisplaySignInForm}/>

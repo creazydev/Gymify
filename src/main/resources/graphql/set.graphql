@@ -1,0 +1,17 @@
+type Set implements UserResource {
+    creationTimestamp: Timestamp,
+    updateTimestamp: Timestamp,
+    createdByUserId: Int,
+    modifiedByUserId: Int
+    id: Int,
+    user: User,
+    repsQuantity: String,
+    plannedRestDuration: Int,
+}
+
+input SetInput {
+    id: Int,
+    repsQuantity: String,
+    plannedRestDuration: Int,
+}
+

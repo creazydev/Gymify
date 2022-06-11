@@ -5,4 +5,15 @@ type Exercise implements UserResource {
     modifiedByUserId: Int
     id: Int,
     user: User,
+    name: String,
+    plannedRestDuration: Int,
+    sets: [Set]
 }
+
+input ExerciseInput {
+    id: Int,
+    name: String,
+    plannedRestDuration: Int,
+    sets: [SetInput]
+}
+

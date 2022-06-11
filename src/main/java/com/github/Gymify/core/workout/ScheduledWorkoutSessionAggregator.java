@@ -55,6 +55,14 @@ public class ScheduledWorkoutSessionAggregator {
         this.cancelAll(this.scheduledWorkoutSessionService.getSpecificationFactory().workoutStatusEquals(SCHEDULED));
     }
 
+    public void deleteScheduled() {
+        this.scheduledWorkoutSessionService
+            .findAll(this.scheduledWorkoutSessionService.getSpecificationFactory().workoutStatusEquals(SCHEDULED))
+            .stream()
+            .sequential()
+            .forEachOrdered(el -> this.scheduledWorkoutSessionService.delete(el.getId()));
+    }
+
     public void cancelAll(Specification<ScheduledWorkoutSession> specification) {
         this.scheduledWorkoutSessionService
                 .findAll(specification)

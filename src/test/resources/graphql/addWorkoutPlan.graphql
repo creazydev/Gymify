@@ -10,5 +10,8 @@ mutation{
         updateTimestamp
         name
         active
+        workoutSessions {
+            id
+        }
     }
 }

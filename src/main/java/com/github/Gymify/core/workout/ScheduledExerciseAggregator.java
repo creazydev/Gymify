@@ -8,9 +8,11 @@ import com.github.Gymify.persistence.entity.*;
 import com.github.Gymify.persistence.enums.WorkoutStatus;
 import com.github.Gymify.persistence.specification.ScheduledWorkoutSessionSpecificationFactory;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.NotImplementedException;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.HttpServerErrorException;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -46,6 +48,8 @@ public class ScheduledExerciseAggregator {
     }
 
     public ScheduledExercise completeScheduledExercise(ScheduledExercise scheduledExercise, Integer actualRestDuration) {
+        throw new NotImplementedException();
+
 //        ScheduledWorkoutSession session = scheduledExercise.getScheduledWorkoutSession();
 //
 //        CompletedExercise completedExercise = new CompletedExercise();
@@ -56,7 +60,5 @@ public class ScheduledExerciseAggregator {
 //
 //        this.onGoingExerciseService.delete(onGoingExercise.getId());
 //        return completedExercise;
-
-        return scheduledExercise;
     }
 }

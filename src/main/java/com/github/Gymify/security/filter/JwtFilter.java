@@ -29,7 +29,7 @@ public class JwtFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws IOException, ServletException {
         getToken(request)
-            .map(userService::loadUserByToken)
+            .flatMap(userService::findUserByToken)
             .map(userDetails -> JwtPreAuthenticationToken
                 .builder()
                 .principal(userDetails)

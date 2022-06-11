@@ -1,0 +1,12 @@
+mutation{
+    activateWorkoutPlan(id: 1){
+        id
+        creationTimestamp
+        updateTimestamp
+        name
+        active
+        workoutSessions {
+            id
+        }
+    }
+}

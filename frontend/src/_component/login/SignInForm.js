@@ -9,8 +9,6 @@ import * as React from "react";
 import { authAtom } from '../../_state';
 import {useSetRecoilState} from "recoil";
 import {Navigate} from "react-router-dom";
-import Typography from "@mui/material/Typography";
-import Link from "@mui/material/Link";
 
 const LOGIN_MUTATION = gql`
     mutation LoginMutation($email: String!$password: String!) {
@@ -27,7 +25,7 @@ export default function SignInForm({ onClose }) {
     const setAuth = useSetRecoilState(authAtom);
 
     if (data) {
-        setAuth(data.login.authenticationToken);
+        setAuth(data.login);
         return <Navigate to="/" />;
     }
 
@@ -51,7 +49,6 @@ export default function SignInForm({ onClose }) {
                     id="email"
                     label={t('email_address')}
                     name="email"
-                    defaultValue="test@mail.ru"
                     autoComplete="email"
                     autoFocus
                     variant="standard"
@@ -76,7 +73,6 @@ export default function SignInForm({ onClose }) {
                     label={t('password')}
                     name="password"
                     type="password"
-                    defaultValue="sample"
                     autoComplete="current-password"
                     autoFocus
                     variant="standard"
@@ -101,27 +97,12 @@ export default function SignInForm({ onClose }) {
                 variant="contained"
                 sx={{mt: 3, mb: 2, bgcolor:'#F50057', fontWeight: 700,}}
             >
-                {t('SUBMIT')}
+                {t('sign_in')}
             </Button>
-
             <Grid container>
                 <Grid item md={12} lg={12} xs={12}>
-                        <Typography
-                            component='h1'
-                            variant="h6"
-                            sx={{
-                                display: 'flex',
-                                flexDirection: 'column',
-                                alignItems: 'center',
-                                marginBottom: 2,
-                            }}>
-                            <Link>
-                                FORGET PASSWORD?
-                            </Link>
-                        </Typography>
-                </Grid>
-                <Grid item md={12} lg={12} xs={12}>
                     <Button
+                        id="toggle_sign_up"
                         href=''
                         variant="outlined"
                         color="error"
