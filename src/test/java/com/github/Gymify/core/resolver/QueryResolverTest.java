@@ -59,8 +59,6 @@ class QueryResolverTest implements GLogger {
 
         GraphQLResponse response = this.graphQLTestTemplate.postForResource("graphql/getWorkoutPlanById.graphql");
 
-        debug(response.getRawResponse().getBody());
-
         assertThat(response.isOk()).isTrue();
         assertThat(response.get("$.data.getWorkoutPlanById.id")).isEqualTo(String.valueOf(this.workoutPlan.getId().intValue()));
         assertThat(response.get("$.data.getWorkoutPlanById.name")).isEqualTo(this.workoutPlan.getName());

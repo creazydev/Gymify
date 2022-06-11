@@ -7,3 +7,7 @@ type Period {
 type Duration {
     seconds: Long
 }
+
+input DurationInput {
+    seconds: Long
+}
