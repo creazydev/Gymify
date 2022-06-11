@@ -1,0 +1,3 @@
+mutation{
+    deleteWorkoutPlan(id: 1)
+}

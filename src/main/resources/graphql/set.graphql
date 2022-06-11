@@ -1,19 +1,17 @@
-type Exercise implements UserResource {
+type Set implements UserResource {
     creationTimestamp: Timestamp,
     updateTimestamp: Timestamp,
     createdByUserId: Int,
     modifiedByUserId: Int
     id: Int,
     user: User,
-    name: String,
+    repsQuantity: String,
     plannedRestDuration: Int,
-    sets: [Set]
 }
 
-input ExerciseInput {
+input SetInput {
     id: Int,
-    name: String,
+    repsQuantity: String,
     plannedRestDuration: Int,
-    sets: [SetInput]
 }
 

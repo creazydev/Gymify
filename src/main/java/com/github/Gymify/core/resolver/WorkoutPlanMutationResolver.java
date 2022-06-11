@@ -22,8 +22,8 @@ public class WorkoutPlanMutationResolver implements GraphQLMutationResolver {
         return this.workoutPlanService.update(workoutPlan);
     }
 
-    public WorkoutPlan activateWorkoutPlan(Long workoutPlanId) {
-        return this.workoutPlanService.find(workoutPlanId)
+    public WorkoutPlan activateWorkoutPlan(Long id) {
+        return this.workoutPlanService.find(id)
                 .map(this.workoutPlanService::activate)
                 .orElseThrow(() -> RuntimeExceptionWhileDataFetching.notFound(WorkoutPlan.class));
     }

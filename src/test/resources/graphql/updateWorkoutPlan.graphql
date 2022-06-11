@@ -1,0 +1,17 @@
+mutation{
+    updateWorkoutPlan(
+        workoutPlan: {
+            id: 1,
+            name: "lol"
+        }
+    ){
+        id
+        creationTimestamp
+        updateTimestamp
+        name
+        active
+        workoutSessions {
+            id
+        }
+    }
+}
