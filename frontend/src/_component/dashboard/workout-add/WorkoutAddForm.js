@@ -44,7 +44,6 @@ const WorkoutAddForm = () => {
                  }}
         >
             <Typography variant='h5'>Add workout</Typography>
-            <Typography variant='h6'>Type workout name</Typography>
             <TextField
                 required
                 fullWidth

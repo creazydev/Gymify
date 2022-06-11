@@ -9,7 +9,7 @@ import {
     TableRow
 } from "@mui/material";
 import {SortableTableHead} from "../../shared/SortableTableHead";
-import {gql, useQuery} from "@apollo/client";
+import {gql, useLazyQuery, useMutation, useQuery} from "@apollo/client";
 import DeleteIcon from '@mui/icons-material/Delete';
 import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
 import EditIcon from '@mui/icons-material/Edit';
@@ -46,6 +46,12 @@ const WORKOUT_PLAN_PAGE_QUERY = gql`
     }
 `;
 
+const REMOVE_WORKOUT = gql`
+    mutation REMOVE_WORKOUT($id: Int!) {
+        deleteWorkoutPlan(id: $id)
+    }
+`
+
 const headCells = [
     {
         id: 'id',
@@ -79,7 +85,7 @@ const headCells = [
     },
 ];
 
-export default function WorkoutPlanTable() {
+export default function WorkoutPlanTable(query, options) {
     const { t, i18n } = useTranslation();
 
     const [order, setOrder] = React.useState('asc');
@@ -132,7 +138,6 @@ export default function WorkoutPlanTable() {
                         {data?.currentUserWorkoutPlans?.content
                             .map((row, index) => {
                                 const labelId = `enhanced-table-checkbox-${index}`;
-
                                 return (
                                     <TableRow
                                         hover
@@ -167,9 +172,11 @@ export default function WorkoutPlanTable() {
                                                     <EditIcon />
                                                 </IconButton>
                                             </Link>
-                                            <IconButton color="error" aria-label="" component="span" size="small">
-                                                <DeleteIcon />
-                                            </IconButton>
+                                            <Link to={`/workout-plans-delete/${row.id}`}>
+                                                <IconButton color="error" aria-label="" component="span" size="small">
+                                                    <DeleteIcon />
+                                                </IconButton>
+                                            </Link>
                                         </TableCell>
                                     </TableRow>
                                 );
