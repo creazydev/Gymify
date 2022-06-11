@@ -7,6 +7,7 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import {gql, useMutation} from "@apollo/client";
 import Alert from "@mui/material/Alert";
+import {Navigate} from "react-router-dom";
 
 const ADD_WORKOUT_MUTATION = gql`
     mutation AddWorkoutPlan($workoutName: String!) {
@@ -23,8 +24,11 @@ const ADD_WORKOUT_MUTATION = gql`
 const WorkoutAddForm = () => {
     const { t, i18n } = useTranslation();
 
-    const [addWorkout, { error }] = useMutation(ADD_WORKOUT_MUTATION);
+    const [addWorkout, { error, data }] = useMutation(ADD_WORKOUT_MUTATION);
 
+    if (data) {
+        return <Navigate to="/workout-plans" />;
+    }
 
     return (
         <FormBox component='form'
