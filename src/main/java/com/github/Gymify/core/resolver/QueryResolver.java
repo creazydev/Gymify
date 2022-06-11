@@ -38,4 +38,8 @@ public class QueryResolver implements GraphQLQueryResolver {
             new GraphQLSpecificationFilter<WorkoutPlan>(filter).getSpecification()
         );
     }
+
+    public WorkoutPlan getWorkoutPlanById(Long id) {
+        return this.workoutPlanService.getOrThrowNotFound(id);
+    }
 }
