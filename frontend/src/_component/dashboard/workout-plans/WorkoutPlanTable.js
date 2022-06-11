@@ -15,7 +15,6 @@ import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
 import EditIcon from '@mui/icons-material/Edit';
 import IconButton from '@mui/material/IconButton';
 import {useTranslation} from "react-i18next";
-import {PhotoCamera} from "@mui/icons-material";
 import {Link} from "react-router-dom";
 
 const WORKOUT_PLAN_PAGE_QUERY = gql`
@@ -97,6 +96,7 @@ export default function WorkoutPlanTable() {
                 direction: order.toUpperCase(),
                 sort: orderBy
             },
+            pollInterval: 500,
         }
     );
 
@@ -114,7 +114,6 @@ export default function WorkoutPlanTable() {
         setRowsPerPage(parseInt(event.target.value, 10));
         setPage(0);
     };
-
     return (
         <div>
             <TableContainer>
