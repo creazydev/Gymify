@@ -18,6 +18,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.time.Instant;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.filter;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doThrow;
@@ -93,9 +94,11 @@ class JwtServiceTest {
         User user = new User();
         user.setEmail(email);
 
-        Instant before = Instant.now().plus(JwtConfiguration.EXPIRES_AT);
+        final int secondError = 15;
+
+        Instant before = Instant.now().plus(JwtConfiguration.EXPIRES_AT).minusSeconds(secondError);
         String token = this.realSignJwtService.getToken(user);
-        Instant after = Instant.now().plus(JwtConfiguration.EXPIRES_AT);
+        Instant after = Instant.now().plus(JwtConfiguration.EXPIRES_AT).plusSeconds(secondError);
 
         DecodedJWT decodedJWT = JWT.decode(token);
         assertThat(decodedJWT.getExpiresAt()).isBetween(before, after);

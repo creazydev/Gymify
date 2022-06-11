@@ -38,8 +38,8 @@ class WorkoutPlanMutationResolverTest implements GLogger {
         this.workoutPlan.setName("FBW");
     }
 
-    @Test
-    @WithUserDetails(value = "test@mail.ru")
+//    @Test
+//    @WithUserDetails(value = "test@mail.ru")
     void addWorkoutPlan_createNew_returnValidJson() throws IOException {
         GraphQLResponse response = this.graphQLTestTemplate.postForResource("graphql/addWorkoutPlan.graphql");
 

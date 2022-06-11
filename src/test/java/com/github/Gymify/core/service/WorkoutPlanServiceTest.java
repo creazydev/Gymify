@@ -102,7 +102,9 @@ class WorkoutPlanServiceTest {
     @Test
     void add_validObject_returnAdded() {
         doReturn(this.workoutPlan).when(this.workoutPlanRepository).save(this.workoutPlan);
+
         assertThat(this.workoutPlanService.add(this.workoutPlan)).isEqualTo(this.workoutPlan);
+        verify(this.workoutSessionListParentDelegate, times(1)).updateCollection(any(), any());
     }
 
     @Test
@@ -116,6 +118,7 @@ class WorkoutPlanServiceTest {
         doReturn(this.workoutPlan).when(this.workoutPlanRepository).save(any());
 
         assertThat(this.workoutPlanService.update(workoutPlan).getName()).isEqualTo(workoutPlan.getName());
+        verify(this.workoutSessionListParentDelegate, times(1)).updateCollection(any(), any());
     }
 
     @Test
@@ -140,6 +143,7 @@ class WorkoutPlanServiceTest {
 
         WorkoutPlan update = this.workoutPlanService.update(workoutPlan);
         assertThat(update.getWorkoutSessions().size()).isEqualTo(1);
+        verify(this.workoutSessionListParentDelegate, times(1)).updateCollection(any(), any());
     }
 
     @Test
@@ -189,6 +193,7 @@ class WorkoutPlanServiceTest {
 
         this.workoutPlanService.delete(this.workoutPlan.getId());
         verify(this.workoutPlanRepository, times(0)).delete(any());
+        verify(this.workoutSessionListParentDelegate, times(0)).updateCollection(any(), any());
     }
 
     @Test
@@ -198,6 +203,7 @@ class WorkoutPlanServiceTest {
 
         this.workoutPlanService.delete(this.workoutPlan.getId());
         verify(this.workoutPlanRepository, times(1)).delete(any());
+        verify(this.workoutSessionListParentDelegate, times(1)).updateCollection(any(), any());
     }
 
     @Test

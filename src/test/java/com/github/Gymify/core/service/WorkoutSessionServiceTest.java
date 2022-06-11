@@ -2,6 +2,7 @@ package com.github.Gymify.core.service;
 
 import com.github.Gymify.persistence.entity.Exercise;
 import com.github.Gymify.persistence.entity.User;
+import com.github.Gymify.persistence.entity.WorkoutPlan;
 import com.github.Gymify.persistence.entity.WorkoutSession;
 import com.github.Gymify.persistence.enums.UserAuthority;
 import com.github.Gymify.persistence.repository.UserResourceRepository;
@@ -28,7 +29,7 @@ import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 class WorkoutSessionServiceTest {
@@ -84,6 +85,7 @@ class WorkoutSessionServiceTest {
         doReturn(this.workoutSession).when(this.userResourceRepository).save(this.workoutSession);
 
         assertThat(this.workoutSessionService.add(this.workoutSession)).isEqualTo(this.workoutSession);
+        verify(this.exerciseListParentDelegate, times(1)).updateCollection(any(), any());
     }
 
     @Test
@@ -99,6 +101,7 @@ class WorkoutSessionServiceTest {
         Mockito.when(this.userResourceRepository.save(any())).then(AdditionalAnswers.returnsFirstArg());
 
         assertThat(this.workoutSessionService.update(workoutSession).getDuration()).isEqualTo(workoutSession.getDuration());
+        verify(this.exerciseListParentDelegate, times(1)).updateCollection(any(), any());
     }
 
     @Test
@@ -116,6 +119,7 @@ class WorkoutSessionServiceTest {
 
         WorkoutSession update = this.workoutSessionService.update(workoutSession);
         assertThat(update.getExercises().size()).isEqualTo(1);
+        verify(this.exerciseListParentDelegate, times(1)).updateCollection(any(), any());
     }
 
     @Test
@@ -153,5 +157,32 @@ class WorkoutSessionServiceTest {
         workoutSession.setExercises(null);
 
         Assertions.assertThrows(RuntimeException.class, () -> this.workoutSessionService.validateEntity(workoutSession));
+    }
+
+    @Test
+    void delete_planByIdNotExists_shouldNotCallRepositoryDeleteMethod() {
+        Specification mock = Mockito.mock(Specification.class);
+
+        doReturn(mock).when(this.specificationFactory).idEquals(any());
+        doReturn(this.user).when(this.userService).getCurrentUser();
+        doReturn(Optional.empty()).when(this.userResourceRepository).findOne((Specification<WorkoutSession>) any());
+
+        this.workoutSessionService.delete(this.workoutSession.getId());
+        verify(this.userResourceRepository, times(0)).delete(any());
+        verify(this.exerciseListParentDelegate, times(0)).updateCollection(any(), any());
+    }
+
+    @Test
+    void delete_planByIdExists_shouldCallRepositoryDeleteMethod() {
+        Specification mock = Mockito.mock(Specification.class);
+
+        doReturn(mock).when(this.specificationFactory).idEquals(any());
+        doReturn(this.user).when(this.userService).getCurrentUser();
+        doReturn(Optional.of(this.workoutSession)).when(this.userResourceRepository).findOne((Specification<WorkoutSession>) any());
+
+        this.workoutSessionService.delete(this.workoutSession.getId());
+
+        verify(this.userResourceRepository, times(1)).delete(any());
+        verify(this.exerciseListParentDelegate, times(1)).updateCollection(any(), any());
     }
 }
