@@ -1,0 +1,14 @@
+query {
+    getWorkoutPlanById(id: 1) {
+        creationTimestamp
+        updateTimestamp
+        createdByUserId
+        modifiedByUserId
+        id
+        name
+        active
+        workoutSessions {
+            id
+        }
+    }
+}

@@ -6,6 +6,7 @@ type Query {
     currentUser: AuthenticatedUser
     currentUserWorkoutSessions(pageableRequest: PageableRequest!, filter: Filter!): WorkoutSessionPage
     currentUserWorkoutPlans(pageableRequest: PageableRequest!, filter: Filter!): WorkoutPlanPage
+    getWorkoutPlanById(id: Int!): WorkoutPlan
 }
 
 type Mutation {
