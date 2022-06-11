@@ -1,10 +1,5 @@
 mutation{
-    addWorkoutPlan(
-        workoutPlan: {
-            id: null,
-            name: "lol"
-        }
-    ){
+    activateWorkoutPlan(id: 1){
         id
         creationTimestamp
         updateTimestamp
