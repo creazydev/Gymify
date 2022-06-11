@@ -61,7 +61,7 @@ class WorkoutPlanMutationResolverTest implements GLogger {
         assertThat(response.get("$.data.addWorkoutPlan.creationTimestamp")).isEqualTo(this.workoutPlan.getCreationTimestamp());
         assertThat(response.get("$.data.addWorkoutPlan.updateTimestamp")).isEqualTo(this.workoutPlan.getUpdateTimestamp());
         assertThat(response.get("$.data.addWorkoutPlan.name")).isEqualTo(this.workoutPlan.getName());
-        assertThat(response.get("$.data.getWorkoutPlanById.workoutSessions[0].id")).isNotNull();
+        assertThat(response.get("$.data.addWorkoutPlan.workoutSessions[0].id")).isNotNull();
         assertThat(response.get("$.data.addWorkoutPlan.active")).isEqualTo(String.valueOf(this.workoutPlan.getActive()));
     }
 
