@@ -15,6 +15,7 @@ import WorkoutSessions from "./_component/dashboard/workout-sessions/WorkoutSess
 import WorkoutSessionForm from "./_component/dashboard/workout-sessions/WorkoutSessionForm";
 import WorkoutAdd from "./_component/dashboard/workout-add/WorkoutAdd";
 import LiveWorkout from "./_component/dashboard/live-workout/LiveWorkout";
+import WorkoutPlanDeleteForm from "./_component/dashboard/workout-plans/WorkoutPlanDeleteForm";
 
 
 const App = () => {
@@ -29,6 +30,7 @@ const App = () => {
                             <Route path='/live-workout' element={<LiveWorkout/>}/>
                             <Route path='workout-plans' element={<WorkoutPlans/>}/>
                             <Route path='workout-plans/:id' element={<WorkoutPlanForm/>}/>
+                            <Route path='workout-plans-delete/:id' element={<WorkoutPlanDeleteForm/>}/>
                             <Route path='workout-sessions' element={<WorkoutSessions/>}/>
                             <Route path='workout-sessions/:id' element={<WorkoutSessionForm/>}/>
                             <Route path='settings' element={<Settings/>}/>
