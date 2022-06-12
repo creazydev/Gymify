@@ -9,13 +9,12 @@ import {
     TableRow
 } from "@mui/material";
 import {SortableTableHead} from "../../shared/SortableTableHead";
-import {gql, useQuery} from "@apollo/client";
+import {gql, useLazyQuery, useMutation, useQuery} from "@apollo/client";
 import DeleteIcon from '@mui/icons-material/Delete';
 import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
 import EditIcon from '@mui/icons-material/Edit';
 import IconButton from '@mui/material/IconButton';
 import {useTranslation} from "react-i18next";
-import {PhotoCamera} from "@mui/icons-material";
 import {Link} from "react-router-dom";
 
 const WORKOUT_PLAN_PAGE_QUERY = gql`
@@ -46,6 +45,12 @@ const WORKOUT_PLAN_PAGE_QUERY = gql`
         }
     }
 `;
+
+const REMOVE_WORKOUT = gql`
+    mutation REMOVE_WORKOUT($id: Int!) {
+        deleteWorkoutPlan(id: $id)
+    }
+`
 
 const headCells = [
     {
@@ -80,7 +85,7 @@ const headCells = [
     },
 ];
 
-export default function WorkoutPlanTable() {
+export default function WorkoutPlanTable(query, options) {
     const { t, i18n } = useTranslation();
 
     const [order, setOrder] = React.useState('asc');
@@ -97,6 +102,7 @@ export default function WorkoutPlanTable() {
                 direction: order.toUpperCase(),
                 sort: orderBy
             },
+            pollInterval: 500,
         }
     );
 
@@ -114,7 +120,6 @@ export default function WorkoutPlanTable() {
         setRowsPerPage(parseInt(event.target.value, 10));
         setPage(0);
     };
-
     return (
         <div>
             <TableContainer>
@@ -133,7 +138,6 @@ export default function WorkoutPlanTable() {
                         {data?.currentUserWorkoutPlans?.content
                             .map((row, index) => {
                                 const labelId = `enhanced-table-checkbox-${index}`;
-
                                 return (
                                     <TableRow
                                         hover
@@ -168,9 +172,11 @@ export default function WorkoutPlanTable() {
                                                     <EditIcon />
                                                 </IconButton>
                                             </Link>
-                                            <IconButton color="error" aria-label="" component="span" size="small">
-                                                <DeleteIcon />
-                                            </IconButton>
+                                            <Link to={`/workout-plans-delete/${row.id}`}>
+                                                <IconButton color="error" aria-label="" component="span" size="small">
+                                                    <DeleteIcon />
+                                                </IconButton>
+                                            </Link>
                                         </TableCell>
                                     </TableRow>
                                 );
